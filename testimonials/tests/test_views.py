@@ -10,6 +10,7 @@ class TestimonialTestCase(TestCase):
 
     def setUp(self):
         # ? using default images for a test purpose to get the image_byte
+        #Todos: need to cleanup after the test
         
         self.data =  {
             "username" : "test user",
@@ -64,25 +65,3 @@ class TestimonialTestCase(TestCase):
 
 
 
-# --------------------------------------- get tests
-        # self.testimonial = Testimonial.objects.create(
-        #     username = "test user one",
-        #     content = 'test content for testimonial',
-        #     user_image = self.test_image,
-        #     city = "test city",
-        #     country = 'test country'
-        # )
-
-    # def test_get_testimonial(self):
-    #     """ test fetch all testimonial success """
-
-    #     response = self.client.get(reverse('testimonials'))
-
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertIn("testimonials", response.context)
-        
-    #     returned_testimonials = response.context['testimonials']
-    #     self.assertLessEqual(len(returned_testimonials), 6)
-    #     self.assertIn(self.testimonial, returned_testimonials)
-
-    

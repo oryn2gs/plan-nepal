@@ -4,14 +4,27 @@ from testimonials.models import Testimonial
 class TestTestimonialModel(TestCase):
 
     def setUp(self) -> None:
-        self.testimonial = Testimonial.objects.create(
-            username="test_user",
-            content="Test content for testimonial",
-            city="Test city",
-            country="Test country"
-        )
+
+        Testimonial.objects.bulk_create([
+            Testimonial(
+                username="test_user_seven",
+                content="Test content for testimonial",
+            )
+            for _ in range(1,7)
+        ])
     
 
-    def test_testimonial_model_str_method(self):
+    def test_testimonial_model_str_method(self) -> None:
+        queryset = Testimonial.objects.all()
         expected_str = "test_user from Test city, Test country"
-        self.assertEqual(str(self.testimonial), expected_str)
+        self.assertEqual(queryset[0].lower(), expected_str.lower())
+
+    def test_get_random_testimonial_with_default_value(self) -> None:
+        result = Testimonial.objects.get_random_testimonial()
+        self.assertTrue(len(result), 6)
+    
+    def test_get_random_testimonial_with_stated_value(self) -> None:
+        result = Testimonial.objects.get_random_testimonial(4)
+        self.assertTrue(len(result), 4)
+
+    

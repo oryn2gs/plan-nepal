@@ -1,12 +1,10 @@
 from django.shortcuts import HttpResponseRedirect
 from testimonials.models import Testimonial
-from testimonials.forms import TestimonialForm
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 
-# Create your views here
 
 @require_POST
 def create_testimonial(request):
@@ -33,22 +31,3 @@ def create_testimonial(request):
 
 
     
-
-
-# @require_POST
-# def create_testimonial(request):
-#     referer = request.META.get('HTTP_REFERER') # get the previous url from header
-#     redirect_url = referer if referer else reverse('homepage')
-#     print("data : ", request.POST)
-#     print("files : ", request.FILES)
-#     print(request.FILES['user_image'].read())
-#     form = TestimonialForm(request.POST, request.FILES)
-#     if form.is_valid():
-#         form.save()
-#         print("Testimonial saved successfully:")
-#         messages.success(request, "Your testimonial has been added successfully")
-#         return HttpResponseRedirect(redirect_url)
-#     print(form.errors, "form error")
-#     messages.error(request, "Unable to add your testimonial")
-#     return HttpResponseRedirect(redirect_url)
-

@@ -1,0 +1,20 @@
+{
+  "name": "plan-nepal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "postcss ./static/main/css/main.css -o ./static/dist/styles.css",
+    "watch:css": "postcss ./static/main/css/main.css -o ./static/dist/styles.css -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "postcss-import": "^15.1.0",
+    "postcss-nesting": "^12.0.1",
+    "tailwindcss": "^3.3.3"
+  }
+}

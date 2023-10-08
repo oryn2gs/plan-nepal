@@ -1,0 +1,7 @@
+@layer base {
+  /* base configuration */
+
+  body {
+    @apply bg-mainColor text-fontMainColor;
+  }
+}

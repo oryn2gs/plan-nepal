@@ -16,7 +16,7 @@ class Homepage(generic.ListView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context_data = super().get_context_data(**kwargs)
-        context_data['testimonial'] = Testimonial.objects.get_random_testimonial()
+        context_data['testimonial'] = Testimonial.objects.get_random_testimonial(0)
       
         context_data['popular'] = get_most_popular_packages()
         

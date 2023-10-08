@@ -48,6 +48,10 @@ pyproject.toml
 poetry.lock
 
 
+# ----styles 
+node_modules
+
+
 # ---- extra files
 todos.md 
 notes.md

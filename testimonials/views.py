@@ -3,25 +3,24 @@ from testimonials.models import Testimonial
 from django.contrib import messages
 from django.urls import reverse
 from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 
-
+@login_required
 @require_POST
 def create_testimonial(request):
-    referer = request.META.get('HTTP_REFERER') # get the previous url from header
-    redirect_url = referer if referer else reverse('homepage')
+    http_referer = request.META.get('HTTP_REFERER') 
+    redirect_url = http_referer if http_referer else reverse('homepage')
 
     data = request.POST
-    image = request.FILES
-
+    user = request.user
     try:
-        Testimonial.objects.create(
-                username = data.get("username"),
+        testimonial = Testimonial.objects.create(
+                user = user,
                 content = data.get("content"),
-                user_image = image.get("user_image"),
-                city = data.get("city"),
-                country = data.get("country")
             )
+        if not testimonial:
+            raise Exception("Something went wrong, please try again later")
         messages.success(
             request, "Your testimonial has been added successfully")
         return HttpResponseRedirect(redirect_url)

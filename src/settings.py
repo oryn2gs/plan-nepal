@@ -23,8 +23,13 @@ INSTALLED_APPS = [
 
     'testimonials',
     'packages',
+    'bookings',
+    'accounts',
 
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_URL = 'signin'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -32,7 +32,7 @@ class PackageDetailUrlTestcase(TestCase):
         )
         self.package.type.add(self.type)
 
-        self.package_detail_url = reverse('package-detail', kwargs={'slug': self.package.slug})
+        self.package_detail_url = reverse('package-detail', kwargs={'package_slug': self.package.slug})
         
     def test_package_detail_url_resolves_to_correct_view(self) -> None:
         resolver_match = resolve(self.package_detail_url)

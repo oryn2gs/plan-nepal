@@ -1,6 +1,9 @@
 from django.db import models
 import uuid
 import random
+from django.conf import settings
+
+from django.utils import timezone
 
 
 class TestimonialManager(models.Manager):
@@ -11,24 +14,18 @@ class TestimonialManager(models.Manager):
         return random_six_queryset
 
 
-def ts_image_fs(instance, filename:str):
-    return f"testimonial_image/{instance.username}.png"
-
 
 class Testimonial(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(max_length=100)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="testimonials")
     content = models.TextField(max_length=500)
-    user_image = models.ImageField(
-        upload_to=ts_image_fs, default="testimonial/default.png"
-        )
-    city = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    created_on = models.DateTimeField(auto_now_add=True)
+
 
     objects = TestimonialManager()
 
     def __str__(self) -> str:
-        return f"{self.username} from {self.city}, {self.country}"
+        return f"Testimonial from {self.user.email}"
     
 
 

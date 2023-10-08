@@ -24,12 +24,12 @@ class TypeModelTestCase(TestCase):
     """ Test form Type Model """
 
     def setUp(self) -> None:
-        self.destination = Destination.objects.create(
+        self.type = Type.objects.create(
             name = "Test Name"
         )
     
     def test_str_method(self) -> None:
-        self.assertEqual(str(self.destination).lower(), "test name")
+        self.assertEqual(str(self.type).lower(), "test name")
 
 
 class PackageModelTestCase(TestCase): 
@@ -66,16 +66,16 @@ class PackageModelTestCase(TestCase):
         self.assertEqual(self.package2.slug, "package-2")
 
     def test_package_absolute_url(self) -> None:
-        expected_url = reverse('package-detail', kwargs={
-            'slug': self.package1.slug
-            })
         actual_url = self.package1.get_absolute_url()
+        expected_url = reverse('package-detail', kwargs={
+            'package_slug': self.package1.slug
+            })
 
         self.assertEqual(expected_url, actual_url)
 
 
     def test_get_final_price_after_discount(self) -> None:
-        final_price = self.package1.get_final_price_after_discount()
+        final_price = self.package1.get_final_price_after_discount
         self.assertEqual(final_price, self.package1.price - self.package1.discount)
         
 

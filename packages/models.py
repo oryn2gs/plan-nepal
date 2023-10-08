@@ -64,13 +64,14 @@ class Package(models.Model):
         return f"{self.destination.name} | {self.name}"
     
     def get_absolute_url(self):
-        return reverse('package-detail', kwargs={'slug': self.slug})    
+        return reverse('package-detail', kwargs={'package_slug': self.slug})    
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
     
+    @property
     def get_final_price_after_discount(self):
         return self.price - self.discount
         

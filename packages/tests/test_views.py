@@ -8,12 +8,20 @@ from packages.models import (
     Type
     )
 
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 class HomepageTestCase(TestCase):
     """ Test where the needed data is present in the response """
 
     def setUp(self) -> None:
         
         self.url = reverse('homepage')
+        
+        self.user = User.objects.create_user(
+            email = "test@email.com",
+            password = "password"
+        )
 
         self.destination = Destination.objects.create(name = 'Destination 1')
         self.type = Type.objects.create(name="Type 1")
@@ -33,7 +41,7 @@ class HomepageTestCase(TestCase):
         self.package2.type.add(self.type)
 
         Testimonial.objects.bulk_create([
-            Testimonial(username='test user one', content='test content for testimonial')
+            Testimonial(user=self.user, content='test content for testimonial')
             for _ in range(7)
         ])
 
@@ -80,7 +88,7 @@ class PackageDetailTestCase(TestCase):
             for i in range(1,5)
         ])
 
-        self.url = reverse('package-detail', kwargs={'slug': self.package.slug})
+        self.url = reverse('package-detail', kwargs={'package_slug': self.package.slug})
 
     def test_package_detail(self) -> None:
         response = self.client.get(self.url)

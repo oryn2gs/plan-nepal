@@ -1,8 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap");
+
+/* ----Tailwind */
 @import "tailwindcss/base";
 @import "./base/base.css";
 
 @import "tailwindcss/components";
-@import "./components/test-card.css";
+@import "./components/button.css";
+@import "./components/icon.css";
+@import "./components/tooltip.css";
+@import "./components/dropdown.css";
+@import "./components/toast-message.css";
+@import "./components/round-spot.css";
+@import "./components/butterfly-grid.css";
+@import "./components/partners-card.css";
+@import "./components/form.css";
+@import "./components/faq-card.css";
+@import "./components/about-us-images.css";
+@import "./components/timeline.css";
+@import "./components/package-type-slider.css";
+@import "./components/testimonial-slider.css";
 
 @import "tailwindcss/utilities";
 @import "./utilities/utilities.css";

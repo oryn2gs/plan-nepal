@@ -1,0 +1,41 @@
+<!-- {% load static %} -->
+
+{% block faqcard %}
+
+<div class="faq-wrapper" id="faq-wrapper">
+    {% if error %}
+        <p class="text-center text-fontColorAccent font-light">{{error | safe}}</p>
+    {% endif %}
+        
+    {% for faq in faq_resolved %}
+        <div class="faq-container">
+            <div class="faq-question__container ">
+                <p class="faq-question flex-grow z-10">{{faq.question}}</p>
+                <button class="btn-faq__toggler" >
+                    <i class="fa-solid fa-caret-down"></i>
+                </button>
+                
+                <div class="comment-icons">
+                    <i class="fa-regular fa-comment"></i>
+                    <i class="fa-regular fa-comment"></i>
+                </div>
+
+            </div>
+            <p class="faq-answer hidden">
+                {{faq.inquiryanswer.content}}
+            </p>
+
+        </div>
+    {% endfor %}
+
+</div>
+    
+{% endblock faqcard %}
+
+
+{% block script_faqcard %}
+<script src="{% static 'main/js/components/faq-card.js' %}"></script>
+    
+{% endblock script_faqcard %}
+    
+    

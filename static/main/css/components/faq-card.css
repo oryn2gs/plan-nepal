@@ -1,0 +1,41 @@
+@layer components {
+  .faq-wrapper {
+    @apply w-[342px] md:w-[600px] mx-auto flex flex-col gap-4;
+
+    .faq-container {
+      @apply shrink-0 bg-primaryColor rounded-lg shadow p-6 flex flex-col gap-6 overflow-hidden;
+
+      .faq-question__container {
+        @apply flex items-start gap-6 relative;
+
+        .faq-question {
+          @apply flex-grow z-10;
+        }
+
+        .btn-faq__toggler {
+          @apply icon shrink-0 transform transition-transform duration-300 ease-in-out;
+
+          &.active {
+            @apply rotate-180;
+          }
+        }
+
+        .comment-icons {
+          @apply top-0 left-0 -translate-x-1/4 -translate-y-2/3 text-7xl absolute;
+
+          :nth-child(1) {
+            @apply text-fontMainColor/40;
+          }
+
+          :nth-child(2) {
+            @apply absolute -translate-x-2/3 translate-y-1/2 text-accentColor/40;
+          }
+        }
+      }
+
+      .faq-answer {
+        @apply transition-all duration-300 ease-in-out;
+      }
+    }
+  }
+}

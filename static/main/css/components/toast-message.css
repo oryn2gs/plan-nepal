@@ -1,0 +1,37 @@
+@layer components {
+  .toast-messages {
+    @apply fixed bottom-20 right-6 z-50;
+
+    .message {
+      @apply shadow rounded p-4 font-extralight flex items-center gap-4 transition ease-in-out duration-300;
+
+      .error {
+        @apply text-red-500;
+      }
+      .success {
+        @apply text-teal-500;
+      }
+      .info {
+        @apply text-cyan-700;
+      }
+      .warning {
+        @apply text-purple-500;
+      }
+
+      p {
+        @apply text-sm;
+
+        span {
+          @apply font-semibold;
+        }
+      }
+
+      .icon {
+        @apply bg-transparent text-fontMainColor;
+        &:hover {
+          @apply bg-fontColorAccent;
+        }
+      }
+    }
+  }
+}

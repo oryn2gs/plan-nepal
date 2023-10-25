@@ -1,7 +1,69 @@
 {% extends 'main/main.html' %}
 
+{% load static %}
+
+{% block title %} <title>Signup</title> {% endblock title %}
 
 {% block content %}
-    <h2> signup page</h2>
+<div class="flex-1 flex-grow flex items-center justify-center">
+
+    <div class="form-container" >
+        <div class="form-image">
+            <img src="{% static 'main/images/auth-form-image.png' %}" alt="" >
+        </div>
+        <form action="{% url 'signup' %}" class="form" method="POST">
+            {% csrf_token %}
+
+            <p class="form-header">Signup</p>
+
+            <div class="form-set">
+                <div class="icon-label">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <input type="email" name="email" id="email" placeholder="Email">
+            </div>
+            <p class="field-error hidden">Please enter a valid email</p>
+
+            <div class="form-set">
+                <div class="icon-label">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <input type="password" name="password" id="password" placeholder="Password">
+                <div class="password-toggler">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+            </div>
+            <p class="field-error hidden">Please enter a valid password, password must contain atleast one uppercase, lowercase, number and symbol</p>
+            
+            <div class="form-set">
+                <div class="icon-label">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" >
+                <div class="password-toggler">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+            </div>
+            <p class="field-error hidden">Password and Confirm Password must match</p>
+
+            <button type="submit" class="btn btn-outline-dark">
+                <div class="inner w-full bg-primaryColor">
+                    Submit
+                </div>
+            </button>
+            <p class="auth-link">
+                already have a account? 
+                <a href="{% url 'signin' %}">signup</a>
+            </p>
+        </form>
+    </div>
+</div>
+
+{% block script_signup %}
+<script type="module" src="{% static 'main/js/components/signup-form.js' %}"></script>
+<script src="{% static 'main/js/components/password-toggler.js' %}"></script>
+{% endblock script_signup %}
+    
 {% endblock content %}
+
     

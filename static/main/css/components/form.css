@@ -1,0 +1,111 @@
+@layer components {
+  .form-container {
+    @apply p-6 bg-primaryColor rounded-lg shadow flex gap-10 flex-col   md:flex-row max-w-[343px] md:max-w-[800px];
+
+    &.booking {
+      @apply md:max-w-full;
+    }
+
+    /* image styles */
+    .form-image {
+      @apply flex-1 shrink flex-grow rounded-lg overflow-hidden;
+      img {
+        @apply h-full object-cover object-center;
+      }
+    }
+
+    .form {
+      @apply flex-1 flex flex-col gap-6 items-center;
+
+      .form-header {
+        @apply section__header mb-4;
+      }
+
+      .section-title {
+        @apply text-center -mb-3;
+      }
+
+      .section {
+        @apply flex flex-col gap-4 w-full md:flex-row md:items-center md:gap-2;
+      }
+
+      .form-set {
+        @apply p-2.5 rounded-md shadow flex gap-3 items-baseline w-full relative;
+
+        input {
+          @apply p-0 shadow-none flex-grow;
+        }
+
+        /* for toogle menu in FAQ page */
+        .custom-select {
+          @apply flex-grow relative;
+
+          .options-menu {
+            @apply w-full p-4 bg-primaryColor rounded shadow absolute left-0 -bottom-4 translate-y-full z-10;
+
+            .option {
+              @apply hover:bg-fontColorAccent/10 cursor-pointer px-1 rounded;
+            }
+          }
+        }
+
+        /* content menu in FAQ section */
+
+        .icon-label {
+          @apply text-fontColorAccent flex items-center justify-center transform rotate-0 transition-transform duration-300 ease-in-out;
+
+          &.active {
+            @apply rotate-180;
+          }
+        }
+
+        .password-toggler {
+          @apply cursor-pointer hover:opacity-80 active:scale-105 text-fontPrimaryColor opacity-80;
+        }
+
+        &.invalid {
+          @apply br-red;
+        }
+      }
+
+      .field-error {
+        @apply text-smMb text-red-500 font-thin -mt-4 ml-2 self-start;
+      }
+
+      button {
+        @apply w-full;
+      }
+
+      .reset-link {
+        @apply text-smMb font-thin self-end -mt-3;
+      }
+
+      .auth-link {
+        @apply text-smMb md:text-sm font-thin;
+
+        a {
+          @apply text-accentColor font-normal;
+        }
+      }
+    }
+
+    /* ? multipart form */
+    .multipart-form {
+      @apply flex-1 flex flex-col justify-between;
+
+      .form-header {
+        @apply section__header mb-4;
+      }
+
+      /* timeline */
+
+      .formset {
+        @apply grow flex items-center;
+
+        .form-section {
+          @apply flex justify-between;
+        }
+      }
+    }
+  }
+}

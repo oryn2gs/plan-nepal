@@ -1,7 +1,48 @@
 {% extends 'main/main.html' %}
 
+{% load static %}
 
 {% block content %}
-    <h2>FAQ page</h2>
+    <div class="my-10 flex flex-col item-center gap-10">
+        <div class="flex flex-col items-center gap-6">
+            <p class="section__header">Frequently asked questions?</p>
+            <div class="flex gap-1">
+                <button class="btn-pill active">
+                    All
+                </button>
+                <button class="btn-pill ">
+                    Packages
+                </button>
+                <button class="btn-pill ">
+                    Destination
+                </button>
+                <button class="btn-pill ">
+                    Type
+                </button>
+                <button class="btn-pill ">
+                    Pricing
+                </button>
+                
+                {% if user.is_authenticated and user.is_staff %}
+                <button class="btn-pill ">
+                    Unresolved
+                </button>
+                    
+                {% endif %}
+                    
+            </div>
+        </div>
+
+        {% include 'bookings/faq-card.html' %}
+
+        <!-- add lazy loading 10-15 items -->
+        {% include 'bookings/faq-form.html' %}
+    </div>
+
+
+{% block script_faq %}
+<script type="module" src="{% static 'main/js/components/faq.js' %}"></script>
+{% endblock script_faq %}
+
 {% endblock content %}
     

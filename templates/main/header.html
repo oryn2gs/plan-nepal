@@ -1,0 +1,76 @@
+{% load static %}
+{% block header %}
+    <header class="w-screen max-w-screen-2xl flex items-center justify-between  mx-auto px-4 py-2 md:px-8 realtive">
+
+        <a href="{% url 'homepage' %}" class="flex items-center gap-2 ">
+            <div class="text-4xl text-accentColor">
+                <i class="fa-brands fa-deskpro"></i>
+            </div>
+            <p class="text-logoHeader font-header font-bold">Plan Nepal</p>
+        </a>
+
+        {% if user.is_authenticated %}      
+            <div class="w-8 h-8 rounded-full dropdown" id="dropdown-btn">
+                <img src="{{user.profile.get_profile_image}}" alt="{{user.profile.username}}">
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <form action="{% url 'signout' %}" method="POST">
+                                {% csrf_token %}
+
+                                <button type="submit">
+                                    Signout
+                                </button>
+                            </form>
+                     
+                        </li>
+                    </ul>
+    
+                </div>
+            </div>
+           
+            
+        {% else %}
+
+        <div class="dropdown" id="dropdown-btn">
+            <i class="fa-regular fa-user"></i>
+
+            <div class="dropdown-menu" id="dropdown-menu">
+                <ul>
+                    <li>
+                        <a href="{% url 'signin' %}">
+                            Signin
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'signup' %}">
+                            Signup
+                        </a>
+                 
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    
+        {% endif %}
+
+        <div class="round-spot large absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 -z-50"></div>
+        
+    </header>
+    
+{% endblock header %}
+
+
+{% block headerscript %}
+<script src="{% static 'main/js/components/dropdown.js' %}"></script>
+    
+{% endblock headerscript %}
+    
+    

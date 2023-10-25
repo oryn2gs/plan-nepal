@@ -60,12 +60,18 @@ class HomepageTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context['popular']) 
     
+    def test_types_in_context(self)-> None:
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context['types']) 
+    
     def test_testimonial_in_context(self)-> None:
         response = self.client.get(self.url)
 
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(response.context['testimonial']) 
-        self.assertEqual(len(response.context['testimonial']), 6)
+        self.assertTrue(response.context['testimonials']) 
+        self.assertEqual(len(response.context['testimonials']), 6)
 
 class PackageDetailTestCase(TestCase):
 
@@ -104,8 +110,38 @@ class PackageDetailTestCase(TestCase):
         self.assertTrue(len(response.context['tour_timeline']), 5)
 
     
+class TestFilterPackagesView(TestCase):
+
+    def setUp(self) -> None:
+        self.destination = Destination.objects.create(name = 'Destination 1')
+        self.type = Type.objects.create(name="Type 1")
+        
+        self.package1 = Package.objects.create(
+            name = "Package 1",
+            destination = self.destination,
+            price = 100.00
+        )
+        self.package1.type.add(self.type)
+        
+        self.package2 = Package.objects.create(
+            name = "Package 2",
+            destination = self.destination,
+            price = 100.00
+        )
+
+        self.url = reverse("packages-filter")
+
+    def test_filter_packages_success(self) -> None:
+        response = self.client.get(self.url, {"query": "type 1"})
+
+        self.assertEqual(response.status_code, 200)
+
+
 
     
+
+    
+
         
 
 

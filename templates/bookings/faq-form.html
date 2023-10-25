@@ -1,0 +1,57 @@
+{% load static %}
+
+
+{% block faq-form %}
+
+<div class="form-container mx-auto" >
+    <div class="form-image">
+        <img src="{% static 'main/images/faq-form-image.png' %}" alt=""
+        class="object-left-bottom"
+        >
+    </div>
+    <form action="{% url 'post-inquiry' %}" class="form" method="POST">
+        {% csrf_token %}
+
+        <p class="form-header">Ask us Question?</p>
+        
+        <div class="form-set">
+            <div class="icon-label">
+                <i class="fa-solid fa-person-hiking"></i>
+            </div>
+            <div class="custom-select">
+                <input type="text" name="inquiry_type" id="inquiry_type" value="Select a topic" class="select-input">
+                <ul class="options-menu hidden">
+                    <li class="option">Packages</li>
+                    <li class="option">Destination</li>
+                    <li class="option">Pricing</li>
+                    <li class="option">Tickets</li>
+                </ul>
+            </div>
+
+            <button type="button" class="icon-label cursor-pointer hover:opacity-90 active:scale-105 basis-0" id="select-menu__toggler">
+                <i class="fa-solid fa-caret-down"></i>
+            </button>
+
+        </div>
+
+        <div class="form-set grow-0">
+            <textarea name="question" id="question" cols="30" rows="3" placeholder="Ask us you question?"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-outline-dark" id="book_btn">
+            <div class="inner w-full bg-primaryColor">
+                Submit
+            </div>
+        </button>
+
+    </form>
+</div>
+    
+
+{% endblock faq-form %}
+
+{% block scriptfaqform %}
+<script src="{% static 'main/js/components/faq-form.js' %}"></script>
+{% endblock scriptfaqform %}
+
+    

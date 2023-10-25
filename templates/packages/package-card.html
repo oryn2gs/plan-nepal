@@ -1,0 +1,46 @@
+
+{% block package_card %}
+<div class="flex items-center justify-center flex-wrap gap-4 transition-all transition-300" id="card-container" >
+
+    {% if error %}
+        <p class="text-center text-fontColorAccent font-light">{{error}}</p>
+    {% endif %}
+    
+    {% for package in packages %}
+        <div class="w-40 sm:w-56 rounded-lg shadow overflow-clip">
+            <div class="w-full max-h-[106px] sm:max-h-36 overflow-hidden flex items-center justify-center">
+                <img src="{{package.get_package_image}}" alt="{{package.id}}" >
+            </div>
+            <div class="p-2 5 flex flex-col gap-1">
+                <div class="flex items-baseline gap-2 text-smMb sm:text-sm">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p class="text-fontPrimaryColor">{{package.destination.name}}</p>
+                </div>
+                <p class="text-smallHeaderMb sm:smallHeader font-header line-clamp-2">
+                    {{package.name|capfirst}}
+                </p>
+                <div class="flex items-center justify-between">
+                    <p class="flex flex-col -gap-1 text-smMb sm:text-re
+                    gular font-semibold">
+                        <span class="text-sm md:text-smMb">From</span>
+                        $ {{package.get_final_price_after_discount}}
+                    </p>
+
+                    <a href="{% url 'package-detail' package.slug %}" class="btn btn-outline-dark">
+                        <div class="inner small">
+                            Book Now
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+        
+    {% endfor %} 
+        
+</div>
+
+    
+{% endblock package_card %}
+    

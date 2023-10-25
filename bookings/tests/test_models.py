@@ -84,8 +84,8 @@ class InquiryModelTestCase(TestCase):
 
 
     def test_str_method(self) -> None:
-        excepted_str = f"Inquired by {self.user.email} for {self.inquiry1.inquiry_type}"
-        self.assertEqual(str(self.inquiry1), excepted_str)
+      
+        self.assertEqual(str(self.inquiry1), str(self.inquiry1.id))
 
     def test_get_all_resolved_inquiry_method(self) -> None:
         resolved_queries = Inquiry.objects.filter_inquiry_by_resolved_value(resolved=True)
@@ -123,5 +123,4 @@ class InquiryAnswerModelTestCase(TestCase):
     
 
     def test_str_method(self) -> None:
-        excepted_str = f"Answered by {self.user.email}, to: {(self.inquiry)}"
-        self.assertEqual(str(self.inquiry_answer), excepted_str)
+        self.assertEqual(str(self.inquiry_answer), str(self.inquiry_answer.id))

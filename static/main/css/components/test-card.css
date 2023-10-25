@@ -1,9 +1,0 @@
-@layer components {
-  .card {
-    @apply shadow rounded p-6 bg-slate-600;
-
-    .header {
-      @apply text-blue-500 font-bold;
-    }
-  }
-}

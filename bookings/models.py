@@ -49,7 +49,7 @@ class InquiryManager(models.Manager):
         queryset = self.get_queryset().filter(
             Q(inquiry_resolved=resolved) & Q(active=True)
             )
-        #  * chain filter if necessary (.value_list(field_name))
+        #  * chain filter if necessary chain filter when
         return queryset
     
     
@@ -76,7 +76,7 @@ class Inquiry(models.Model):
     objects = InquiryManager()
 
     def __str__(self):
-        return f"Inquired by {self.user.email} for {self.inquiry_type}"
+        return str(self.id)
     
 
 
@@ -88,7 +88,7 @@ class InquiryAnswer(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return f"Answered by {self.user.email}, to: {self.inquiry}"
+        return str(self.id)
 
 
 

@@ -1,0 +1,24 @@
+@layer components {
+  .icon {
+    @apply w-8 h-8 flex items-center justify-center cursor-pointer rounded-full bg-transparent text-fontMainColor br-font;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    &:active {
+      @apply scale-105;
+    }
+  }
+  /* .icon {
+    @apply w-8 h-8 flex items-center justify-center cursor-pointer rounded-full bg-accentColor text-primaryColor;
+
+    &:hover {
+      @apply opacity-80;
+    }
+
+    &:active {
+      @apply scale-105;
+    }
+  } */
+}

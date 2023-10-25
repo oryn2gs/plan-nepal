@@ -1,3 +1,39 @@
 @layer utilities {
   /* utitlities configuratuion */
+
+  .br-red {
+    @apply border-solid border-[1px] border-red-500;
+  }
+
+  .br-font {
+    @apply border-solid border-2 border-fontMainColor;
+    &.small {
+      @apply border-[1px];
+    }
+  }
+
+  .br-img {
+    @apply border-solid border-4 border-mainColor;
+  }
+
+  .hero-section__header {
+    @apply text-center font-header text-mainHeaderMb tracking-tighter leading-10 md:text-mainHeader md:leading-[70px] sm:w-2/3;
+  }
+
+  .section__header {
+    @apply text-sectionHeaderMb font-header leading-[30px] md:text-sectionHeader md:leading-10;
+  }
+
+  /* ? leflets marker */
+  .leaflet-marker-icon {
+    @apply bg-fontMainColor w-5 h-5 br-red;
+  }
+
+  .leaflet-popup-content-wrapper {
+    @apply px-3 py-1;
+  }
+
+  .leaflet-popup-close-button {
+    @apply font-main;
+  }
 }

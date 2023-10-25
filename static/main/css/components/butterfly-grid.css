@@ -1,0 +1,39 @@
+@layer components {
+  .butterfly-grid {
+    @apply grid grid-cols-2 grid-rows-2 gap-4;
+
+    .card {
+      @apply max-w-[192px] max-h-[176px] min-w-[144px] min-h-[130px] md:w-56 md:h-40 bg-primaryColor shadow flex flex-col items-center justify-center text-smallHeaderMb font-semibold md:text-smallHeader;
+
+      &:nth-child(1),
+      &:nth-child(2) {
+        @apply rounded-t-full;
+      }
+
+      &:nth-child(1) {
+        @apply rounded-bl-full;
+      }
+
+      &:nth-child(2) {
+        @apply rounded-br-full;
+      }
+
+      &:nth-child(3),
+      &:nth-child(4) {
+        @apply rounded-b-full;
+      }
+
+      &:nth-child(3) {
+        @apply rounded-tl-full;
+      }
+
+      &:nth-child(4) {
+        @apply rounded-tr-full;
+      }
+
+      span {
+        @apply -mb-2 text-sectionHeaderMb font-header md:text-sectionHeader;
+      }
+    }
+  }
+}

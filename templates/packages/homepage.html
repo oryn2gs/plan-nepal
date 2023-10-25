@@ -1,13 +1,167 @@
-{% include 'main/main.html' %}
+{% extends 'main/main.html' %}
 
+{% load static %}
+
+
+{% block title %}
+    <title>homepage</title>
+{% endblock title %}
+    
 
 {% block content %}
 
-<h2 class="text-red-500 text-4xl text-center">HOla!!</h2>
+    <div class="flex flex-col gap-20 md:gap-20 items-center">
 
-<div class="card">
-    <div class="header">some header</div>
-</div>
+        <!--# hero section -->
+        <section class=" flex flex-col gap-10 items-center">
+            <div class=" flex flex-col items-center">
+                <h2 class="hero-section__header">Blessed are the curious for they shall have adventures.</h2>
+        
+                <div class="mt-8 flex gap-4 w-full justify-center">
+                    <a href="#packages-list" class="btn btn-normal">
+                        <div class="inner">
+                            Packages
+                        </div>
+                    </a>
+                    
+                    <a href="{% url 'faq-list' %}" class="btn btn-outline">
+                        <p class="inner">
+                            Ask us Question
+                        </p>
+                    </a>
+                </div>
+            </div>
+        
+            <div class=" flex-1 grow  rounded-lg overflow-hidden">
+                <img src="{% static 'main/images/hero-image.png' %}" alt="">
+                <!-- add a  vertical infinite scrolling --Image grid -->
+        
+            </div>
+        
+        </section>
     
+        <!-- #section -- Packages -->
+        <section class="w-full flex flex-col gap-10 items-center" id="packages-list">
+            <div class="w-full flex flex-col items-center">
+                <p class="section__header mb-4">Our Services</p>
+
+                <div class="package-slider">
+                    
+                    <button class="chevron prev" id="btn-prev__package">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <div class="slide hide-scrollbar" id="package-slide">
+                        <button class="btn-pill active">All</button>
+        
+                        {% for type in types %}
+                        <button class="btn-pill">{{type}}</button>
+                        {% endfor %}     
+        
+                    </div>
+                    <button class="chevron next" id="btn-next__package">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+    
+            {% include 'packages/package-card.html' %}
+    
+    
+        </section>
+        
+        <!-- # section --Why choose US -->
+        <section class="flex flex-col gap-10 items-center">
+            <p class="section__header mb-4">Why Choose Us?</p>
+            <div class="flex items-center flex-col gap-10 lg:gap-24 lg:flex-row">
+                <div class="basis-1/2 flex flex-col items-center text-center gap-6 lg:text-start">
+                    <p class="section__header w-full sm:w-2/3 lg:w-full">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, aut!</p>
+                    <p class="line-clamp-5 w-full sm:w-2/3  text-fontPrimaryColor self-center lg:self-start">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae, nobis laboriosam totam blanditiis iste adipisci nihil quod ad quibusdam autem.</p>
+                </div>
+                {% include 'packages/butterfly-grid.html' %}
+        
+            </div>
+        </section>
+    
+    
+        <!-- # Section --- Partners -->
+        <section class="flex flex-col gap-10 md:gap-20 items-center">
+            <p class="section__header mb-4">Our Partners</p>
+    
+            <div class="partners-card__container">
+                <div class="card">
+                    <a href="#" class="inner">
+                        <i class="fa-brands fa-atlassian"></i>
+                        <p >Nepal Tourism Board</p>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="#" class="inner">
+                        <i class="fa-brands fa-airbnb"></i>
+                        <p >AirBnb</p>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="#" class="inner">
+                        <i class="fa-brands fa-twitter"></i>
+                        <p >Nepal Tourism Board</p>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="#" class="inner">
+                        <i class="fa-brands fa-weixin"></i>
+                        <p >Nepal Airlines</p>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="#" class="inner">
+                        <i class="fa-solid fa-earlybirds"></i>
+                        <p>TripAdvisor</p>
+                    </a>
+                </div>
+            </div>
+    
+        </section>
+    
+        <!--#  Section Testomonial -->
+        <section class=" w-full flex flex-col gap-10 md:gap-20 items-center">
+    
+            <p class="section__header mb-4">
+                What our customers say about us.
+            </p>
+    
+            <div class="testimonail-slider" id="carousel-wrapper">
+                <div class="track hide-scrollbar" id="testimonial-track">
+                    <button class="chevron prev" id="btn-prev__testimonial">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    {% for testomonial in testimonials %}
+                        {% include 'packages/testomonial-card.html' %}
+                    {% endfor %}
+
+                    <button class="chevron next" id="btn-next__testimonial">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+                
+        </section>
+    </div>
+
+
+
+
+{% block homepage_script %}
+    <script type="module" src="{% static 'packages/js/services.js' %}"></script>
+    <script src="{% static 'packages/js/package-slide.js' %}"></script>
+    <script src="{% static 'packages/js/testimonial-carousel.js' %}"></script>
+{% endblock homepage_script %}
+
+
 {% endblock content %}
+
+
+    
     

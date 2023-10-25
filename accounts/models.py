@@ -102,6 +102,11 @@ def profile_image_fs(instance, _) -> str:
 
 
 class Profile(models.Model):
+    GENDER_CHOICES = [
+        ('male', 'Male'),
+        ('female', 'Female'),
+        ('transgender', 'Transgender')
+    ]
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     firstname = models.CharField(max_length=50, null=True, blank=True)
@@ -111,8 +116,8 @@ class Profile(models.Model):
     country = models.CharField(max_length=25, null=True, blank=True)
     country_code = models.CharField(max_length=10, null=True, blank=True)
     phone_number = models.CharField(max_length=25, null=True, blank=True)
+    gender = models.CharField(max_length=15, choices=GENDER_CHOICES)
     updated_on = models.DateTimeField(auto_now=True)
-    # *  gender
 
 
     def __str__(self):
@@ -123,6 +128,12 @@ class Profile(models.Model):
         if self.firstname and self.lastname:
             return f"{self.firstname} {self.lastname}"
         return None
+    
+    @property
+    def get_profile_image(self) -> str:
+        if self.profile_image:
+            return self.profile_image.url
+        return "/media/accounts/profile_image/profile_image_default.png"
 
 
 

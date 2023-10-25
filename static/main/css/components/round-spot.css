@@ -1,0 +1,23 @@
+@layer components {
+  .round-spot {
+    background-image: radial-gradient(
+      rgba(98, 230, 185, 0.7) 5%,
+      rgba(98, 230, 185, 0.5) 10%,
+      rgba(98, 230, 185, 0.3) 15%,
+      rgba(98, 230, 185, 0.2) 20%,
+      rgba(98, 230, 185, 0)
+    );
+
+    &.large {
+      width: 600px;
+      height: 600px;
+      filter: blur(100px);
+    }
+
+    &.small {
+      width: 100px;
+      height: 100px;
+      filter: blur(25px);
+    }
+  }
+}

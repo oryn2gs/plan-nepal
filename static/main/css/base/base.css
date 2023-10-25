@@ -2,6 +2,46 @@
   /* base configuration */
 
   body {
-    @apply bg-mainColor text-fontMainColor;
+    @apply bg-mainColor text-fontMainColor text-regularMb md:text-regular font-body;
+  }
+
+  img {
+    @apply object-cover object-center;
+  }
+
+  a {
+    @apply text-fontPrimaryColor;
+    &:hover {
+      @apply opacity-80;
+    }
+    &:active {
+      @apply scale-105;
+    }
+  }
+
+  input {
+    @apply bg-primaryColor p-2.5 rounded shadow;
+
+    &::placeholder {
+      @apply font-body font-light text-fontColorAccent;
+    }
+
+    &:active,
+    &:focus {
+      @apply outline-none border-none;
+    }
+  }
+
+  textarea {
+    @apply w-full;
+
+    &::placeholder {
+      @apply font-body font-light text-fontColorAccent;
+    }
+
+    &:active,
+    &:focus {
+      @apply outline-none border-none;
+    }
   }
 }

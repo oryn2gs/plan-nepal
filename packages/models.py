@@ -12,6 +12,7 @@ class Destination(models.Model):
         return self.name 
     
 
+
 class Type(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -74,6 +75,12 @@ class Package(models.Model):
     @property
     def get_final_price_after_discount(self):
         return self.price - self.discount
+    
+    def get_package_image(self) -> str:
+        if self.image: 
+            return self.image.url
+        return 'media/package_image/default_package_image.png'
+
         
 
 

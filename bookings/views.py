@@ -1,11 +1,16 @@
 from typing import Any
-from django.http import JsonResponse
-from django.shortcuts import HttpResponseRedirect, get_object_or_404
+from django.shortcuts import (
+    HttpResponseRedirect, 
+    get_object_or_404, 
+    HttpResponse, 
+    render
+    )
 from django.contrib import messages
 from django.urls import reverse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views import generic
+from django.core.exceptions import EmptyResultSet
 
 from packages.models import Package
 
@@ -73,7 +78,8 @@ class FaqListView(generic.ListView):
 
 @login_required
 @require_POST
-def post_inquiry(request) -> JsonResponse:
+def post_inquiry(request) -> HttpResponseRedirect:
+    redirect_url = reverse('faq-list')
     try:
         user = request.user
         data = request.POST
@@ -88,26 +94,23 @@ def post_inquiry(request) -> JsonResponse:
         )
         if not inquiry_created:
             raise Exception("Some thing went wrong, please try again later.")
-        return JsonResponse({
-            "status": "success",
-            "message": "Your Inquiry has been posted, we\'ll notify you once our operator responds."
-        }, status=200)
         
+        messages.success(request, "Your Inquiry has been posted, we\'ll notify you once our operator responds.")
+        return HttpResponseRedirect(redirect_url)
+   
     except Exception as e:
-        return JsonResponse({
-            "status": "error",
-            "message": str(e),
-        }, status = 400)
-    
+        messages.error(request, str(e))
+        return HttpResponseRedirect(redirect_url, status = 400)
 
 
 
 @user_passes_test(_user_is_staff)
 @require_POST
 def reply_inquiry(request) -> HttpResponseRedirect:
+
+    http_referer = request.META.get("HTTP_REFERER")
+    redirect_url = http_referer if http_referer else reverse('homepage')
     try:
-        http_referer = request.META.get("HTTP_REFERER")
-        redirect_url = http_referer if http_referer else reverse('homepage')
         user = request.user
         data = request.POST
         fields = ["inquiry_id", "content"]
@@ -134,7 +137,45 @@ def reply_inquiry(request) -> HttpResponseRedirect:
 
 
 
+@require_GET
+def filter_inqury(request) -> HttpResponse:
+    try:
+        query = request.GET.get("query")
+        print(query)
 
+        if query.lower() == "all":
+            results = Inquiry.objects.filter_inquiry_by_resolved_value(True)
+        elif query.lower() == "unresolved":
+            results = Inquiry.objects.filter_inquiry_by_resolved_value(False)
+        else:
+            results = Inquiry.objects.filter_inquiry_by_resolved_value(True).filter(inquiry_type__iexact=query)
+
+        if not results:
+            # dynamically add the query name
+            raise EmptyResultSet("There is no content related to the tag.")
+        
+
+        html_fragment = render(
+            request, 
+            'bookings/faq-card.html', 
+            {'faq_resolved': results}
+            )
+        return HttpResponse(html_fragment.content)
+
+    except EmptyResultSet as empty_result_exp:
+        html_fragment = render(
+            request, 
+            'bookings/faq-card.html', 
+            {'error': str(empty_result_exp)})
+        return HttpResponse(html_fragment.content)
+    
+    except Exception as e:
+        html_fragment = render(
+            request, 
+            'bookings/faq-card.html', 
+            {'error': str(e)})
+        return HttpResponse(html_fragment.content)
+  
 
 
 

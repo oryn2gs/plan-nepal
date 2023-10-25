@@ -1,9 +1,89 @@
-{% include 'main/main.html' %}
+{% extends 'main/main.html' %}
 
+
+{% load static %}
+    
+{% block title %} <title>Package Detail</title>{% endblock title %}
+    
 
 {% block content %}
 
-<h6>Package detail page</h6>
+<div class="flex my-10 flex-col gap-10 md:gap-20 items-center">
+    <div class="md:basis1/2 flex flex-col items-center gap-6">
+        <p class="section__header">{{package.name|capfirst}}</p>
+        <p>{{package.description}}</p>
+
+        <p class="font-bold flex items-center flex-col">
+            From
+            <span class="text-smallHeaderMb md:text-smallHeader font-bold">
+
+                ${{package.get_final_price_after_discount}}
+            </span>
+        </p>
+
+        <div class="flex gap-4">
+            <button class="btn btn-normal">
+                <div class="inner">
+                    Book Now
+                </div>
+            </button>
+            <button class="btn btn-outline">
+                <div class="inner">
+                    Ask us Question?
+                </div>
+            </button>
+        </div>
+
+        <div class="w-11/12 mt-10 aspect-video rounded-lg overflow-hidden">
+            <img src="{{package.get_package_image}}" alt="{package.id}" class="object-cover object-center w-full h-full">
+        </div>
+
+        <!-- ? timeline -->
+        <div class="timeline" id="timeline">
+            <div class="line" id="line"></div>
+            <div class="start-end br-font small">
+                <div class="text-wrapper">
+                    <p class="text">Start</p>
+                </div>
+            </div>
+   
+            {% for timeline in tour_timeline %}
+                <div class="timeline-item">
+                    <div class="day">
+                        <p>Day {{timeline.day}}</p>
+                    </div>
+                    <div class="content">
+                        <p class="stop-name">{{timeline.stop_name}}</p>
+                        <p class="stop-desc">{{timeline.description}}</p>
+                    </div>
+
+                </div>
+            {% endfor %}
+                        
+            <div class="start-end br-font small">
+                <div class="text-wrapper">
+                    <p class="text">End</p>
+                </div>
+       
+            </div>
+
+        </div>
+
     
+        <p>{{package.cost_information}}</p>
+
+
+        {% include 'bookings/booking-form.html' %}
+  
+    </div>
+
+</div>
+
+
+{% block timeline_script %}
+    <script src="{% static 'main/js/components/timeline.js' %}"></script>
+{% endblock timeline_script %}
+    
+
 {% endblock content %}
     

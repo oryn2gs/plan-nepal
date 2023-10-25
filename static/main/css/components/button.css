@@ -1,0 +1,78 @@
+@layer components {
+  .btn {
+    @apply cursor-pointer bg-accentColor rounded flex gap-2 items-center;
+
+    .inner {
+      @apply transition-all duration-300 ease-in-out;
+    }
+
+    /* &:hover {
+      @apply opacity-80;
+    } */
+
+    &:active {
+      @apply scale-105;
+    }
+  }
+
+  .btn-normal {
+    @apply p-0.5;
+
+    & > .inner {
+      @apply px-3 py-1.5 bg-accentColor rounded text-mainColor md:px-3.5 md:py-2;
+
+      &:hover {
+        @apply bg-mainColor text-accentColor;
+      }
+    }
+  }
+
+  .btn-outline {
+    @apply p-0.5;
+
+    & > .inner {
+      @apply px-3 py-1.5 bg-mainColor rounded text-accentColor md:px-3.5 md:py-2;
+
+      &:hover {
+        @apply bg-accentColor text-mainColor;
+      }
+    }
+  }
+
+  .btn-outline-dark {
+    @apply p-0.5 bg-fontMainColor;
+
+    & > .inner {
+      @apply px-3 py-1.5 bg-mainColor rounded text-fontMainColor md:px-3.5 md:py-2;
+
+      &.small {
+        @apply px-2 py-1 text-smMb sm:text-sm;
+      }
+
+      &:hover {
+        @apply bg-fontMainColor text-mainColor;
+      }
+    }
+  }
+
+  /* # pill button */
+
+  .btn-pill {
+    @apply py-0.5 px-2 bg-primaryColor text-smMb md:text-sm rounded-full;
+
+    &:hover {
+      @apply shadow;
+    }
+
+    &:active {
+      @apply scale-105;
+    }
+
+    &:active,
+    &.active {
+      @apply bg-fontMainColor text-primaryColor;
+    }
+  }
+
+  /* #togglebtn */
+}

@@ -1,0 +1,21 @@
+{% load static %}
+
+{% block testomonial %}
+
+{% with testomonial.user as user %}
+
+<div class="testimonial-card snap-center">
+    <p class="content">{{testomonial.content}}</p>
+    
+    <div class="user-container">
+        <img src="{{user.profile.get_profile_image}}" alt="{{user.id}}">
+        <p >{{user.email}}</p>
+        <p >{{country}}</p>
+    </div>
+</div>
+
+{% endwith %}
+{% endblock testomonial %}
+
+
+    

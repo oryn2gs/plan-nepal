@@ -4,11 +4,13 @@ from accounts.forms import (
     UserLoginForm
     )
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.views import generic
 from django.urls import reverse_lazy
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -26,10 +28,8 @@ class UserRegistrationView(generic.CreateView):
         user = form.save()
         login(self.request, user)
 
-        http_referer = self.request.META.get("HTTP_REFERER")
-        redirect_url = http_referer if http_referer else self.success_url
         messages.success(self.request, "Your account has been created successfully,  and you\'re logged in.")
-        return HttpResponseRedirect(redirect_url)
+        return HttpResponseRedirect(self.success_url)
 
     def form_invalid(self, form):
         messages.error(self.request, "There was an error in the registration form.")
@@ -47,8 +47,6 @@ class UserLoginView(generic.View):
         return render(request, self.template_name, {'form': form_class})
 
     def post(self, request):
-        http_referer = request.META.get("HTTP_REFERER")
-        redirect_url = http_referer if http_referer else self.success_url
 
         form = self.form_class(data=request.POST)
         if form.is_valid():
@@ -58,9 +56,20 @@ class UserLoginView(generic.View):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Login in successfully.")
-                return HttpResponseRedirect(redirect_url)
+                return HttpResponseRedirect(self.success_url)
         messages.error(request, "Invalid credentails")
         return render(request, self.template_name, {'form': self.form_class})
+
+
+@login_required
+@require_POST
+def logout_view(request):
+    # !write a a test case
+    http_referer = request.META.get("HTTP_REFERER")
+    response_url = http_referer if http_referer else reverse_lazy('homepage')
+    logout(request)
+    messages.success(request, "Logout Successfully")
+    return HttpResponseRedirect(response_url)
 
 
 

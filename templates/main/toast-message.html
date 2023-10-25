@@ -1,0 +1,27 @@
+{% load static %}
+
+{% block toastmessage %}
+<ul class="toast-messages" id="toast-messages">
+    {% if messages %}
+
+    {% for message in messages %}
+    <li{% if message.tags %} class="message"{% endif %} role="alert" id="message">
+        <p class="{{ message.tags }}">
+            <span>{{message.tags|capfirst}}: </span>  {{ message }}
+        </p>
+        <div class="icon">
+            <i class="fa-solid fa-xmark"></i>
+        </div>
+    </li>
+
+    {% endfor %}
+    {% endif %}
+</ul>
+      
+{% endblock toastmessage %}
+
+{% block toastmessagescript %}
+<script src="{% static 'main/js/components/toast-message.js' %}"></script>
+
+{% endblock toastmessagescript %}
+    

@@ -1,0 +1,118 @@
+@layer components {
+  .timeline {
+    @apply my-10 flex flex-col gap-4 place-items-start justify-center lg:items-center ml-10 md:mx-0 relative;
+
+    .line {
+      @apply justify-center absolute  left-0 lg:left-1/2 w-0.5 bg-fontMainColor;
+    }
+
+    .start-end {
+      @apply w-24  h-24 md:w-44 md:h-44 -translate-x-1/2 lg:-translate-x-0 rounded-full font-header bg-transparent  flex items-center justify-center;
+
+      .text-wrapper {
+        @apply w-14 md:w-24 h-14 md:h-24 rounded-full bg-fontMainColor text-mainColor flex items-center justify-center;
+
+        .text {
+          @apply text-smallHeaderMb md:text-smallHeader;
+        }
+      }
+    }
+
+    .timeline-item {
+      @apply flex gap-2 items-center;
+
+      .day {
+        @apply shrink-0 w-12 h-12 md:w-20 md:h-20 rounded-full text-smMb md:text-sm text-mainColor bg-fontMainColor -translate-x-1/2 lg:-translate-x-0 font-semibold flex items-center justify-center;
+      }
+
+      .content {
+        @apply h-full max-w-md p-4 rounded shadow relative;
+
+        &::before {
+          @apply content-[""] w-10 h-0.5 md:w-14 bg-fontMainColor absolute top-1/2 left-0  -translate-x-full -translate-y-1/2 -z-50;
+        }
+
+        .stop-name {
+          @apply font-semibold;
+        }
+        .stop-desc {
+          @apply line-clamp-4 hover:line-clamp-none;
+        }
+      }
+
+      &:nth-child(even) {
+        @apply lg:translate-x-1/2;
+        .day {
+          @apply lg:-translate-x-1/2;
+        }
+      }
+
+      &:nth-child(odd) {
+        @apply lg:flex-row-reverse lg:-translate-x-1/2;
+        .day {
+          @apply lg:translate-x-1/2;
+        }
+
+        .content::before {
+          @apply lg:left-auto lg:right-0 lg:translate-x-full;
+        }
+      }
+    }
+  }
+  /* .timeline {
+    @apply br-red my-10 flex flex-col gap-4 place-items-start lg:items-center relative ml-10 md:mx-0 before:content-[''] before:w-0.5 before:h-full before:bg-fontMainColor before:absolute top-0 before:-z-50;
+
+    .start-end {
+      @apply w-24 h-24 md:w-44 md:h-44 -translate-x-1/2 lg:-translate-x-0 rounded-full font-header bg-transparent  flex items-center justify-center;
+
+      .text-wrapper {
+        @apply w-14 md:w-24 h-14 md:h-24 rounded-full bg-fontMainColor text-mainColor flex items-center justify-center;
+
+        .text {
+          @apply text-smallHeaderMb md:text-smallHeader;
+        }
+      }
+    }
+
+    .timeline-item {
+      @apply flex gap-2 items-center;
+
+      .day {
+        @apply shrink-0 w-12 h-12 md:w-20 md:h-20 rounded-full text-smMb md:text-sm text-mainColor bg-fontMainColor -translate-x-1/2 lg:-translate-x-0 font-semibold flex items-center justify-center;
+      }
+
+      .content {
+        @apply h-full max-w-md p-4 rounded shadow relative;
+
+        &::before {
+          @apply content-[""] w-10 h-0.5 md:w-14 bg-fontMainColor absolute top-1/2 left-0  -translate-x-full -translate-y-1/2 -z-50;
+        }
+
+        .stop-name {
+          @apply font-semibold;
+        }
+        .stop-desc {
+          @apply line-clamp-4 hover:line-clamp-none;
+        }
+      }
+
+      &:nth-child(even) {
+        @apply lg:translate-x-1/2;
+        .day {
+          @apply lg:-translate-x-1/2;
+        }
+      }
+
+      &:nth-child(odd) {
+        @apply lg:flex-row-reverse lg:-translate-x-1/2;
+        .day {
+          @apply lg:translate-x-1/2;
+        }
+
+        .content::before {
+          @apply lg:left-auto lg:right-0 lg:translate-x-full;
+        }
+      }
+    }
+  } */
+}

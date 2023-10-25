@@ -1,7 +1,62 @@
 {% extends 'main/main.html' %}
 
+{% load static %}
+
+{% block title %} <title>Signin</title> {% endblock title %}
 
 {% block content %}
-    <h2> signin page </h2>
+    <div class="flex-1 flex-grow flex items-center justify-center">
+
+        <div class="form-container" >
+            <div class="form-image">
+                <img src="{% static 'main/images/auth-form-image.png' %}" alt="" >
+            </div>
+            <form action="{% url 'signin' %}" class="form" method="POST">
+                {% csrf_token %}
+    
+                <p class="form-header">Signin</p>
+    
+                <div class="form-set">
+                    <div class="icon-label">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <input type="email" name="email" id="email" placeholder="Email">
+                </div>
+                <p class="field-error hidden">Please enter a valid email</p>
+
+                <div class="form-set">
+                    <div class="icon-label">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <input type="password" name="password" id="password" placeholder="Password" >
+                    <div class="password-toggler">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                </div>
+    
+                <a href="#" class="reset-link">
+                    forgot your password?
+                </a>
+    
+                <button type="submit" class="btn btn-outline-dark" id="login_button">
+                    <div class="inner w-full bg-primaryColor">
+                        Submit
+                    </div>
+                </button>
+                <p class="auth-link">
+                    don't have a account yet? 
+                    <a href="{% url 'signup' %}">signup</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    {% block login_script %}
+    <script src="{% static 'main/js/components/signin-form.js' %}"></script>
+    <script src="{% static 'main/js/components/password-toggler.js' %}"></script>
+    {% endblock login_script %}
 {% endblock content %}
+
+
+    
     

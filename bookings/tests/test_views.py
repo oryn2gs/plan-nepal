@@ -108,7 +108,6 @@ class FaqListViewTestCase(TestCase):
         self.assertIn('faq_unresolved', response.context)
 
 
-
 class PostInquiryViewTestCase(TestCase):
     
     def setUp(self) -> None:
@@ -124,24 +123,35 @@ class PostInquiryViewTestCase(TestCase):
         self.client.force_login(self.user)
 
         self.url = reverse("post-inquiry")
+        self.redirect_url = reverse('faq-list')
         self.signin_url = reverse('signin')
 
     def test_post_inquiry_success(self) -> None:
         response = self.client.post(self.url, data= self.form_data)
 
-        self.assertEqual(response.status_code, 200)
-        data = response.json()
-        self.assertEqual(data['status'], "success")
-        self.assertEqual(data['message'], "Your Inquiry has been posted, we\'ll notify you once our operator responds.")
+        self.assertEqual(response.status_code, 302)
+
+        self.assertTrue(Inquiry.objects.first())
+        self.assertRedirects(response, self.redirect_url)
+        messages = [
+            str(messages) for messages in get_messages(response.wsgi_request)
+        ]
+        self.assertEqual(messages[0], "Your Inquiry has been posted, we\'ll notify you once our operator responds.")
+
     
     def test_post_inquiry_faliure_with_no_content(self) -> None:
         form_data = {"inquiry_type": "packages"}
         response = self.client.post(self.url, data=form_data)
 
         self.assertEqual(response.status_code, 400)
-        data = response.json()
-        self.assertEqual(data['status'], "error")
-        self.assertEqual(data['message'], "Missing field question, please complete the form")
+
+        self.assertFalse(Inquiry.objects.first())
+        messages = [
+            str(messages) for messages in get_messages(response.wsgi_request)
+        ]
+      
+        self.assertEqual(messages[0], "Missing field question, please complete the form")
+
     
     def test_post_inquiry_faliure_with_unauthenticated_user(self) -> None:
         self.client.logout()
@@ -201,4 +211,54 @@ class PostInquiryAnswerTestCase(TestCase):
         self.assertEqual(messages[0], f"This inquiry_id is required, please complete the form")
     
         
+class InquiryFilterTestCase(TestCase):
 
+    def setUp(self) -> None:
+        self.user = User.objects.create_user(
+            email = "test@email.com",
+            password = "password"
+        )
+        import random
+        Inquiry.objects.bulk_create([
+            Inquiry(
+                user = self.user,
+                inquiry_type =  "packages",
+                question = "some question",
+                inquiry_resolved = random.choice([True, False])
+            )
+            for _ in range(8)
+        ])
+
+        self.url = reverse("faq-list-filter")
+
+
+    
+    def test_filter_inquiry_success_for_resolved_faq(self):
+        query = "packages"
+        response = self.client.get(self.url + f"?query={query}")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'bookings/faq-card.html')
+        self.assertIn("some question", str(response.content))
+
+
+    def test_filter_inquiry_success_for_unresolved_faq(self):
+        query = "unresolved"
+        response = self.client.get(self.url + f"?query={query}")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'bookings/faq-card.html')
+        self.assertIn("some question", str(response.content))
+
+
+    def test_filter_inquiry_error(self):
+        query = "invalid_type"
+        response = self.client.get(self.url + f"?query={query}")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(
+            "There is no content related to the tag.", 
+            str(response.content)
+            )
+    
+    

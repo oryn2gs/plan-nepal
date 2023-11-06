@@ -11,7 +11,7 @@
         <div class="form-image">
             <img src="{% static 'main/images/auth-form-image.png' %}" alt="" >
         </div>
-        <form action="{% url 'signup' %}" class="form" method="POST">
+        <form action="{% url 'signup' %}" class="form" method="POST" id="signup-form">
             {% csrf_token %}
 
             <p class="form-header">Signup</p>
@@ -46,14 +46,14 @@
             </div>
             <p class="field-error hidden">Password and Confirm Password must match</p>
 
-            <button type="submit" class="btn btn-outline-dark">
+            <button type="submit" class="btn btn-outline-dark" id="signup_button">
                 <div class="inner w-full bg-primaryColor">
                     Submit
                 </div>
             </button>
             <p class="auth-link">
                 already have a account? 
-                <a href="{% url 'signin' %}">signup</a>
+                <a href="{% url 'signin' %}">signin</a>
             </p>
         </form>
     </div>

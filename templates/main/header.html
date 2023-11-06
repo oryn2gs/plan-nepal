@@ -9,8 +9,17 @@
             <p class="text-logoHeader font-header font-bold">Plan Nepal</p>
         </a>
 
+        <ul class="flex gap-4 items-center" id="header-list">
+            <li>
+                <a href="{% url 'about-us' %}">About us</a>
+            </li>
+            <li>
+
+            </li>
+       
+
         {% if user.is_authenticated %}      
-            <div class="w-8 h-8 rounded-full dropdown" id="dropdown-btn">
+            <div class="w-8 h-8 rounded-full dropdown account" id="dropdown-btn">
                 <img src="{{user.profile.get_profile_image}}" alt="{{user.profile.username}}">
                 <div class="dropdown-menu" id="dropdown-menu">
                     <ul>
@@ -37,7 +46,7 @@
             
         {% else %}
 
-        <div class="dropdown" id="dropdown-btn">
+        <div class="dropdown authenticate" id="dropdown-btn">
             <i class="fa-regular fa-user"></i>
 
             <div class="dropdown-menu" id="dropdown-menu">
@@ -60,6 +69,8 @@
         </div>
     
         {% endif %}
+
+        </ul>
 
         <div class="round-spot large absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 -z-50"></div>
         

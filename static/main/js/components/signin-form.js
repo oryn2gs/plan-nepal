@@ -6,8 +6,9 @@ const loginBtn = document.getElementById("login_button");
 const validateField = (event) => {
   const inputField = event.target;
   const parentElem = inputField.parentElement;
+  let fieldValid = inputField.validity.valid && inputField.value !== "";
 
-  if (!inputField.validity.valid) {
+  if (!fieldValid) {
     parentElem.classList.add("invalid");
     parentElem.nextElementSibling.classList.remove("hidden");
   } else {

@@ -1,13 +1,19 @@
 
 {% block package_card %}
-<div class="flex items-center justify-center flex-wrap gap-4 transition-all transition-300" id="card-container" >
+
 
     {% if error %}
         <p class="text-center text-fontColorAccent font-light">{{error}}</p>
     {% endif %}
     
     {% for package in packages %}
-        <div class="w-40 sm:w-56 rounded-lg shadow overflow-clip">
+        <div class="package-card w-40 sm:w-56 rounded-lg shadow overflow-clip" data-id="{{package.slug}}" 
+        {% if type %}    
+        data-type="{{type}}"
+        {% else %}
+        data-type="all"
+        {% endif %}
+        >
             <div class="w-full max-h-[106px] sm:max-h-36 overflow-hidden flex items-center justify-center">
                 <img src="{{package.get_package_image}}" alt="{{package.id}}" >
             </div>
@@ -39,7 +45,7 @@
         
     {% endfor %} 
         
-</div>
+
 
     
 {% endblock package_card %}

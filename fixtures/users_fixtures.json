@@ -1,0 +1,41 @@
+[
+{
+  "model": "accounts.user",
+  "pk": "oryn2gsgmailcom",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$cp8w70UieMZI8yX1ggDJpK$IORTZYFBGMyXJ6vHuGs3XLLyYt3Gk4BMyt4YQ6GD5ZA=",
+    "last_login": "2023-10-31T17:37:11.735Z",
+    "email": "oryn2gs@gmail.com",
+    "is_active": true,
+    "staff": true,
+    "admin": true,
+    "created_on": "2023-10-03T09:53:06.747Z"
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": "testuseroneemailcom",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$DoPnnZrB1LVMDN9EkDCVJM$EmlYUnLm06o8Fj2sNxwNRJNqt5VbKQ+cLZV5cqW7mco=",
+    "last_login": null,
+    "email": "testuserone@email.com",
+    "is_active": true,
+    "staff": false,
+    "admin": false,
+    "created_on": "2023-10-31T18:31:38.955Z"
+  }
+},
+{
+  "model": "accounts.user",
+  "pk": "testusertwoemailcom",
+  "fields": {
+    "password": "pbkdf2_sha256$600000$MycotNCRDxzHYoyqfusuX3$mepTd324VSsyamSqqXt99Lk71FuM/o4BaFu+roJXU7w=",
+    "last_login": null,
+    "email": "testusertwo@email.com",
+    "is_active": true,
+    "staff": false,
+    "admin": false,
+    "created_on": "2023-10-31T18:39:31.776Z"
+  }
+}
+]

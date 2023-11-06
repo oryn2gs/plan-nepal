@@ -36,6 +36,10 @@
           @apply p-0 shadow-none flex-grow;
         }
 
+        select {
+          @apply bg-primaryColor p-0 flex-grow;
+        }
+
         /* for toogle menu in FAQ page */
         .custom-select {
           @apply flex-grow relative;

@@ -8,45 +8,44 @@ from bookings.models import (
     InquiryAnswer
 )
 
+class BookingAdmin(admin.ModelAdmin):
+    list_display = ['user', 'package', 'arrival_date', 'airport_pickup', 'bookings_fullfilled', 'payments_done']
+    list_filter = ['bookings_fullfilled', 'package']
+    readonly_fields = ['total_price']
+    raw_id_fields = ["package"]
 
-# class BookingAdmin(admin.ModelAdmin):
-#     list_display = ['id']
+admin.site.register(Booking, BookingAdmin)
 
-admin.site.register(Booking)
-
-
-
-
-class InquiryAnswerInline(admin.TabularInline):
+class InquiryAnswerInline(admin.StackedInline):
     model = InquiryAnswer
     extra = 1
     fields = ('content',)
 
 
 class InquiryAdmin(admin.ModelAdmin):
-    list_display = ["id", "user", "inquiry_type", "inquiry_resolved"]
+    list_display = ["user", "inquiry_type", "replied_by", "inquiry_resolved"]
     list_filter = ["inquiry_type", "inquiry_resolved", "created_on"]
-    InquiryAdminForm = InquiryAdminForm
     inlines = [InquiryAnswerInline]
 
-    def save_model(self, request, obj, form, change):
-        super().save_model(request, obj, form, change)
-        print("user", request.user, request.user.slug)
+    #! Need to fix -- while creating a INquiryANswer --need to a assign user
 
-        # !need to fix the reply for Inquiry
-        if not obj.inquiry_resolved and form.cleaned_data.get('inquiry_answer_content'):
-            InquiryAnswer.objects.create(
-                inquiry=obj,
-                user=request.user,
-                content=form.cleaned_data['inquiry_answer_content']
-            )
+    def replied_by(self, obj):
+        """ Fetches user of InquiryAnswer related to Inquiry
+
+        Args:
+            obj (_type_): Inquiry obj
+
+        Returns:
+            _type_: InquiryAnswer user if any or none
+        """
+        return obj.answer.user
+
+
 
 admin.site.register(Inquiry, InquiryAdmin)
 
 
-class InquiryAnswerAdmin(admin.ModelAdmin):
-    list_display = ["id", "inquiry", "user"]
-    list_filter = ["user", "timestamp"]
-admin.site.register(InquiryAnswer, InquiryAnswerAdmin)
+
+
 
 

@@ -11,6 +11,7 @@ from packages.models import Destination, Package
 
 from datetime import date, time
 
+    
 class BookingCreateTestCase(TestCase):
 
     def setUp(self) -> None:

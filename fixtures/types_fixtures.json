@@ -1,0 +1,16 @@
+[
+{
+  "model": "packages.type",
+  "pk": "33ea53d6-0fba-4146-acc4-cb46a1edb4a2",
+  "fields": {
+    "name": "test type one"
+  }
+},
+{
+  "model": "packages.type",
+  "pk": "4495e535-7abb-4119-8b7f-13f3e9779266",
+  "fields": {
+    "name": "test type two"
+  }
+}
+]

@@ -22,16 +22,17 @@
         </p>
 
         <div class="flex gap-4">
-            <button class="btn btn-normal">
+            <a href="#booking-form" class="btn btn-normal">
                 <div class="inner">
                     Book Now
                 </div>
-            </button>
-            <button class="btn btn-outline">
-                <div class="inner">
-                    Ask us Question?
-                </div>
-            </button>
+            </a>
+            
+            <a href="{% url 'faq-list' %}" class="btn btn-outline">
+                <p class="inner">
+                    Ask us Question
+                </p>
+            </a>
         </div>
 
         <div class="w-11/12 mt-10 aspect-video rounded-lg overflow-hidden">

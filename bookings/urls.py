@@ -8,7 +8,10 @@ from bookings.views import (
     )
 
 urlpatterns = [
-    path('create-booking/<slug:package_slug>/', create_booking, name="create-booking"),
+    path('create-booking/<slug:package_slug>/', 
+         create_booking, 
+         name="create-booking"
+         ),
     
     path('faq/', FaqListView.as_view(), name="faq-list"),
     path('faq/filter/', filter_inqury, name="faq-list-filter"),

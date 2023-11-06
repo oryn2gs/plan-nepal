@@ -44,4 +44,9 @@
       @apply outline-none border-none;
     }
   }
+
+  /* ------test */
+  .test-select {
+    @apply br-red bg-blue-300;
+  }
 }

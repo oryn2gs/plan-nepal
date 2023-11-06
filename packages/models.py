@@ -46,10 +46,14 @@ def package_fs(instance, filename: str) -> str:
 
 
 class Package(models.Model):
-    slug = models.SlugField(unique=True)
-    destination = models.ForeignKey(Destination, on_delete=models.CASCADE, related_name="package")
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    name = models.CharField(max_length=250, unique=True)
+    slug = models.SlugField(
+        help_text="Perpopulated field bases on package name"
+    )
+    destination = models.ForeignKey(
+        Destination, on_delete=models.CASCADE, related_name="package")
     type = models.ManyToManyField(Type, blank=True)
-    name = models.CharField(max_length=250, null=False, blank=False)
     description = models.TextField()
     image = models.ImageField(upload_to=package_fs, default="package_image/default.png")
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -109,6 +113,6 @@ class TourTimeline(models.Model):
     objects = TourTimelineManager()
 
     def __str__(self):
-        return f"day:{self.day} at {self.stop_name}"
+        return f"day {self.day} at {self.stop_name}"
     
 

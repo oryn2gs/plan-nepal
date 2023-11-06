@@ -1,0 +1,16 @@
+[
+{
+  "model": "packages.destination",
+  "pk": "257b1b20-9474-45d2-ab26-167e52d94dc2",
+  "fields": {
+    "name": "test destination two"
+  }
+},
+{
+  "model": "packages.destination",
+  "pk": "ebee6733-1a70-42e6-a7e0-7f31f2fb51e7",
+  "fields": {
+    "name": "test destination one"
+  }
+}
+]

@@ -4,6 +4,7 @@ from django.contrib.auth.forms import (
     ReadOnlyPasswordHashField, 
     UserCreationForm,
 )
+from accounts.models import Profile
 from django.core.exceptions import ValidationError
 
 from django.contrib.auth import get_user_model
@@ -130,7 +131,45 @@ class UserLoginForm(forms.Form):
             return None
         return user
     
+    
+    
+class PasswordResetForm(forms.Form):
 
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+    )
+    confirm_password = forms.CharField(
+        widget=forms.PasswordInput,
+    )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('confirm_password')
+
+        if password and confirm_password and password != confirm_password:
+            raise ValidationError("Password and confirm password must match.")
+
+        return cleaned_data
+    
+
+class UserProfileForm(forms.ModelForm):
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(
+                attrs={
+                'type': 'date',
+                'class': 'w-full grow'
+            }
+            
+        ),
+    )
+    
+    class Meta:
+        model = Profile 
+        fields = "__all__"
+        exclude = ["user"]
+
+    
 # ---Rendering none field errors in templates
 # <form method="post">
 #     {% csrf_token %}
@@ -156,23 +195,3 @@ class UserLoginForm(forms.Form):
 # </form>
 
 
-
-    
-class PasswordResetForm(forms.Form):
-
-    password = forms.CharField(
-        widget=forms.PasswordInput,
-    )
-    confirm_password = forms.CharField(
-        widget=forms.PasswordInput,
-    )
-
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        confirm_password = cleaned_data.get('confirm_password')
-
-        if password and confirm_password and password != confirm_password:
-            raise ValidationError("Password and confirm password must match.")
-
-        return cleaned_data

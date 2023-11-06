@@ -6,10 +6,10 @@ from django.shortcuts import (
     render
     )
 from django.contrib import messages
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.decorators.http import require_POST, require_GET
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.views import generic
+from django.views import generic, View
 from django.core.exceptions import EmptyResultSet
 
 from packages.models import Package
@@ -19,7 +19,8 @@ from bookings.models import (
     Booking,
     Inquiry,
     InquiryAnswer
-    )
+)
+
 
 @login_required
 @require_POST
@@ -29,8 +30,10 @@ def create_booking(request, package_slug:str) -> HttpResponseRedirect:
         data = request.POST
         user = request.user
 
-        redirect_url = reverse('package-detail', kwargs={'package_slug': package_slug}) if package_slug else reverse('homepage')
-
+        redirect_url = reverse('package-detail', kwargs={
+            'package_slug': package_slug
+            }) 
+        
         try:
             package = get_object_or_404(Package, slug=package_slug)
             booking_made = Booking.objects.create(

@@ -2,32 +2,36 @@
 
 {% block booking_form %}
 
-<div class="form-container booking">
+<div class="form-container booking" id="booking-form">
     <div class="form-image">
         <img src="{% static 'main/images/faq-form-image.png' %}" alt="">
     </div>
+
     
-    <form class="form" action="{% url 'create-booking' package.slug %}" method="POST">
+
+    <form class="form" method="POST" id="booking-form">
         {% csrf_token %}
    
         <p class="form-header">Book Now</p>
         
-        <!-- ? form section -->
-        <div class="form-set">
+        <!-- hidden fieldfs -->
+        {{booking_form.user}}
+        <div class="form-set hidden">
             <i class="fa-solid fa-person-hiking"></i>
-            <input type="text" name="package_name" value="{{package.name|capfirst}}" disabled>
+            {{booking_form.package}}
+            <span>{{package.name}}</span>
         </div>
 
 
         <p class="section-title">No. of people</p>
         <div class="section">
             <div class="form-set">
-                <i class="fa-solid fa-child"></i>
-                <input type="number" name="package_name" placeholder="Kids">
+                {{booking_form.kids.label}}:
+                {{booking_form.kids}}
             </div>
             <div class="form-set">
-                <i class="fa-solid fa-child"></i>
-                <input type="number" name="package_name" placeholder="Adults">
+                {{booking_form.adults.label}}:
+                {{booking_form.adults}}
             </div>
 
         </div>
@@ -36,11 +40,11 @@
         <div class="section -mb-2">
             <div class="form-set">
                 <i class="fa-solid fa-plane-arrival"></i>
-                <input type="date" name="arrival_date" class="w-full grow">
+                {{booking_form.arrival_date}}
             </div>
             <div class="form-set">
                 <i class="fa-solid fa-plane-arrival"></i>
-                <input type="time" name="arrival_time" class="w-full">
+                {{booking_form.arrival_time}}
             </div>
 
         </div>
@@ -48,37 +52,51 @@
         <div class="section">
             <div class="form-set">
                 <i class="fa-solid fa-plane"></i>
-                <input type="text" name="Airline" placeholder="airline">
+
+                {{booking_form.airlines}}
             </div>
             <div class="form-set">
                 <i class="fa-solid fa-plane-departure"></i>
-                <input type="text" name="flight_number" placeholder="Flight Number">
+                {{booking_form.flight_number}}
             </div>
 
         </div>
 
         <!-- toggle btn -->
         <label class="relative inline-flex items-center cursor-pointer">
-        <input type="checkbox" name="airport_pickup"  class="sr-only peer">
+        {{booking_form.airport_pickup}}
         <div class="w-11 h-6 bg-fontColorAccent peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-fontColorAccent after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-fontMainColor"></div>
-        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Airport Pickup</span>
+        <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{booking_form.airport_pickup.label}}</span>
         </label>
- 
-
+        
         <div class="form-set">
-            <textarea name="message" cols="30" rows="3" placeholder="If you have any messages"></textarea>
+            {{booking_form.message}}
         </div>
+
+        {{user_form.as_p}}
        
 
-        <button type="submit" class="btn btn-outline-dark" id="login_button">
+        <button type="submit" class="btn btn-outline-dark" id="booking_button">
             <div class="inner w-full bg-primaryColor">
                 Submit
             </div>
         </button>
           
       
-    </form>
+    </form> 
+
 </div>
+
+
     
 {% endblock booking_form %}
+
+
+{% block bookings_script %}
+    <script src="{% static 'main/js/components/booking-form.js' %}"></script>
+
+{% endblock bookings_script %}
     
+    
+
+

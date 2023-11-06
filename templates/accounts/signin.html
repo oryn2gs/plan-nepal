@@ -11,7 +11,7 @@
             <div class="form-image">
                 <img src="{% static 'main/images/auth-form-image.png' %}" alt="" >
             </div>
-            <form action="{% url 'signin' %}" class="form" method="POST">
+            <form action="{% url 'signin' %}" class="form" method="POST" id="login-form">
                 {% csrf_token %}
     
                 <p class="form-header">Signin</p>
@@ -23,7 +23,7 @@
                     <input type="email" name="email" id="email" placeholder="Email">
                 </div>
                 <p class="field-error hidden">Please enter a valid email</p>
-
+                
                 <div class="form-set">
                     <div class="icon-label">
                         <i class="fa-solid fa-lock"></i>
@@ -33,7 +33,8 @@
                         <i class="fa-solid fa-eye"></i>
                     </div>
                 </div>
-    
+                <p class="field-error hidden">Please enter a valid password</p>
+                
                 <a href="#" class="reset-link">
                     forgot your password?
                 </a>

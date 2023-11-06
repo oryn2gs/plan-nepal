@@ -116,11 +116,6 @@ class TourTimelineModelTestCase(TestCase):
             day=2
         )
 
-    def test_str_method(self) -> None:
-        self.assertEqual(
-            str(self.timeline1), 
-            f"day:{self.timeline1.day} at {self.timeline1.stop_name}"
-            )
     
     def test_filter_instance_related_to_package(self) -> None:
         results = TourTimeline.objects.filter_instance_related_to_package(

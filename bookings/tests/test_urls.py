@@ -30,6 +30,8 @@ class BookingUrlTestcase(TestCase):
             "package_slug": self.package.slug
             })
      
+
+        
     def test_create_booking_url_resolves_to_correct_view(self) -> None:
         resolver_match = resolve(self.create_booking_url)
         self.assertEqual(

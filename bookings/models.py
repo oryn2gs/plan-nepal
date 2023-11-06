@@ -5,10 +5,13 @@ from django.conf import settings
 import uuid
 from packages.models import Package
 
+
 class Booking(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bookings")
-    package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name="package_bookings")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="bookings")
+    package = models.ForeignKey(
+        Package, on_delete=models.CASCADE, related_name="package_bookings")
     kids = models.PositiveIntegerField(
         default = 0,
         help_text="Age below 12 yrs old"
@@ -23,7 +26,8 @@ class Booking(models.Model):
     flight_number = models.CharField(max_length=50)
     airport_pickup = models.BooleanField(default=True)
     message = models.TextField(null=True, blank=True)
-    total_price = models.DecimalField(default=0, decimal_places=2, max_digits=10)
+    total_price = models.DecimalField(
+        default=0, decimal_places=2, max_digits=10)
     bookings_fullfilled = models.BooleanField(default=False)
     payments_done = models.BooleanField(default=False)
     booked_on = models.DateTimeField(auto_now_add=True)
@@ -51,7 +55,6 @@ class InquiryManager(models.Manager):
             )
         #  * chain filter if necessary chain filter when
         return queryset
-    
     
 
 class Inquiry(models.Model):
@@ -82,13 +85,26 @@ class Inquiry(models.Model):
 
 class InquiryAnswer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    inquiry = models.OneToOneField(Inquiry, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="inquiry_replies")
+    inquiry = models.OneToOneField(
+        Inquiry, 
+        on_delete=models.CASCADE,
+        related_name="answer"
+        )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE, 
+        )
     content = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return str(self.id)
+    
+    def save(self, *args, **kwargs):
+        if not self.user:
+            self.user = self.request.user
+        return super().save(*args, **kwargs)
+
 
 
 

@@ -1,0 +1,32 @@
+{% extends 'main/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="flex-1 flex-grow flex flex-col items-center justify-center gap-10">
+    <div class="w-full md:w-2/3 mt-10">
+        <img src="{% static 'main/images/404.png' %}" alt="404">
+    </div>
+    <div class="flex flex-col items-center gap-4 mb-10">
+        <p class="font-header text-sectionHeaderMb md:text-sectionHeader uppercase">Page Not Found</p>
+        <p class="w-full md:w-1/3 text-center">
+            The page You're Looking for is temporary unavailable or has been removed!
+        </p>
+        <div class="flex flex-wrap gap-4 items-center">
+            <button class="btn btn-normal-dark" onclick="history.back()">
+                <div class="inner">
+                    Go Back
+                </div>
+            </button>
+            <button class="btn btn-outline-dark">
+                <a href="{% url 'homepage' %}" class="inner w-full bg-primaryColor">
+                Go to Homepage
+                </a>
+        </button>
+        </div>
+    </div>
+
+</div>
+    
+{% endblock content %}

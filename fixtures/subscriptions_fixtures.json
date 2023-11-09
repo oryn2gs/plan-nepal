@@ -1,0 +1,20 @@
+[
+{
+  "model": "subscriptions.subscription",
+  "pk": "35baa7fd-5506-421e-a5ff-bd986c0ccb4b",
+  "fields": {
+    "email": "testsubsone@email.com",
+    "active": true,
+    "created_on": "2023-11-09T16:58:55.741Z"
+  }
+},
+{
+  "model": "subscriptions.subscription",
+  "pk": "9d1eb667-bfac-4fb2-a0ad-e542baf07264",
+  "fields": {
+    "email": "testsubstwo@email.com",
+    "active": true,
+    "created_on": "2023-11-09T16:59:51.360Z"
+  }
+}
+]

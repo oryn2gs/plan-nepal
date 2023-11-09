@@ -1,6 +1,6 @@
 @layer components {
   .form-container {
-    @apply p-6 bg-primaryColor rounded-lg shadow flex gap-10 flex-col   md:flex-row max-w-[343px] md:max-w-[800px];
+    @apply p-6 bg-primaryColor rounded-lg shadow flex gap-10 flex-col   md:flex-row max-w-[343px]  md:max-w-[800px];
 
     &.booking {
       @apply md:max-w-full;
@@ -82,14 +82,6 @@
 
       .reset-link {
         @apply text-smMb font-thin self-end -mt-3;
-      }
-
-      .auth-link {
-        @apply text-smMb md:text-sm font-thin;
-
-        a {
-          @apply text-accentColor font-normal;
-        }
       }
     }
 

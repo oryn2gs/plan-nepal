@@ -1,9 +1,8 @@
-const passwordInputField = document.getElementById("id_password");
-
-passwordInputField.addEventListener("blur", (event) => {
+const emailInputField = document.getElementById("id_email");
+emailInputField.addEventListener("blur", (event) => {
   const inputField = event.target;
   const parentElem = inputField.parentElement;
-  let fieldValid = inputField.value !== "";
+  let fieldValid = inputField.validity.valid && inputField.value !== "";
   if (!fieldValid) {
     parentElem.classList.add("invalid");
     parentElem.nextElementSibling.classList.remove("hidden");

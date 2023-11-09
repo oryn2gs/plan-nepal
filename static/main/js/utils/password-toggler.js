@@ -1,3 +1,4 @@
+// ! password toggler
 const passwordToggler = document.querySelectorAll(".password-toggler");
 
 if (passwordToggler) {
@@ -16,3 +17,16 @@ if (passwordToggler) {
     });
   });
 }
+
+// ! adding a invalid to the the form-set related to the error
+document.addEventListener("DOMContentLoaded", () => {
+  const errorMessages = document.querySelectorAll(".field-error");
+  console.log(errorMessages);
+  if (errorMessages.length > 0) {
+    errorMessages.forEach((message) => {
+      if (!message.classList.contains("hidden")) {
+        message.previousElementSibling.classList.add("invalid");
+      }
+    });
+  }
+});

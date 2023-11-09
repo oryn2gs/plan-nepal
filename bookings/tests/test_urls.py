@@ -39,8 +39,6 @@ class BookingUrlTestcase(TestCase):
             )
 
 
-
-
 class InquiryUrlTestcase(TestCase):
 
     def setUp(self) -> None:

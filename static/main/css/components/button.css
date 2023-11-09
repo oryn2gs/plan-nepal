@@ -39,6 +39,18 @@
     }
   }
 
+  .btn-normal-dark {
+    @apply p-0.5 bg-fontMainColor;
+
+    & > .inner {
+      @apply px-3 py-1.5 bg-fontMainColor rounded text-mainColor md:px-3.5 md:py-2;
+
+      &:hover {
+        @apply bg-mainColor text-fontMainColor;
+      }
+    }
+  }
+
   .btn-outline-dark {
     @apply p-0.5 bg-fontMainColor;
 

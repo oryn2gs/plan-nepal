@@ -1,9 +1,10 @@
-from typing import Any
+from typing import Any, Dict
 from django import forms
 from django.contrib.auth.forms import (
     ReadOnlyPasswordHashField, 
     UserCreationForm,
 )
+from django.utils.translation import gettext as _
 from accounts.models import Profile
 from django.core.exceptions import ValidationError
 
@@ -57,16 +58,51 @@ class UserAdminChangeForm(forms.ModelForm):
         return self.initial["password"]
     
 
-
 # ---------Users forms------------------------
+class EmailField(forms.EmailField):
+    """ Custom EmailField -- with a validation method which checks if the user already exists in the database.
 
+    Args:
+        forms (_type_): Django forms Charfield
+    """ 
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.widget = forms.EmailInput(
+            attrs={
+            'placeholder': 'Email'
+            })
+
+
+    def clean(self, value: str) -> Any:
+        email = super().clean(value)
+        user_exists = User.objects.filter(email__iexact=email).first()
+        if not user_exists:
+            raise ValidationError("User with that email does not exists!")
+        return email
 
 class UserRegistrationForm(forms.ModelForm):
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                "placeholder": "Email"
+            }
+        )
+    )
     password = forms.CharField(
-        widget=forms.PasswordInput
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password"
+            }
+        )
         )
     confirm_password = forms.CharField(
-        label='Confirm Password', widget=forms.PasswordInput
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Confirm Password"
+            }
+        )
         )
     
     class Meta: 
@@ -74,12 +110,12 @@ class UserRegistrationForm(forms.ModelForm):
         fields = ["email", "password", "confirm_password"]
 
     def clean_email(self) -> str:
-        email = self.cleaned_data.get('email')
-        
-        user_exists = User.objects.filter(email__iexact=email).first()
-        if user_exists:
-            raise ValidationError("User with that email already exists.")
-
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                "User with that email already exists!",
+                code="email_already_exists"
+                )
         return email
 
     def clean(self):
@@ -88,58 +124,60 @@ class UserRegistrationForm(forms.ModelForm):
         confirm_password = cleaned_data.get('confirm_password')
 
         if password and confirm_password and password != confirm_password:
-            raise ValidationError("Password and confirm password must match")
+            raise ValidationError({
+                "confirm_password":"Password and confirm password must match"
+                }, code="password_no_match")
 
         return cleaned_data
-
     
 
 class UserLoginForm(forms.Form):
-    email = forms.EmailField()
+    email = EmailField()
     password = forms.CharField(
-        widget=forms.PasswordInput
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password"
+            }
         )
-    
+        )
 
-    def clean(self) -> dict[str, Any]:
-        from django.utils.translation import gettext as _
-        cleaned_data = super().clean()
-        email = self.cleaned_data.get('email')
-        password = self.cleaned_data.get('password')
-        
-        user = self._get_user(email)
-        if not user:
-            raise ValidationError(
-                _("User with %(value)s does not exists."), 
-                code="invalid email",
-                params={"value": email}
-            )
-        
-        password_match = user.check_password(password)
-        if not password_match:
-            raise ValidationError(
-                _("The password that you provided is incorrect"),
-                code="invalid password"
-            )
-        
-        return cleaned_data
-    
-    def _get_user(self, email: str) -> User:
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
         try:
-            user = User.objects.get(email__iexact=email)
-        except User.DoesNotExist:
-            return None
-        return user
+            user = User.objects.get(email=self.cleaned_data.get("email"))
+            if not user.check_password(password):
+                raise forms.ValidationError(
+                    "Please enter a valid password",
+                    code="wrong_password"
+                    )
+        except User.DoesNotExist as e:
+            None
+        
+        return password
     
     
     
+class RequestResetPasswordForm(forms.Form):
+    email = EmailField()
+
+
+
 class PasswordResetForm(forms.Form):
 
     password = forms.CharField(
-        widget=forms.PasswordInput,
+        help_text="A password must not be less than 8 character, must contain atleast one number, one uppercase, one lowercase and a special charater. ",
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password"
+            }
+        ),
     )
     confirm_password = forms.CharField(
-        widget=forms.PasswordInput,
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Confirm password",
+            }
+        )
     )
 
     def clean(self):

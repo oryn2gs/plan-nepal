@@ -20,22 +20,32 @@
                     <div class="icon-label">
                         <i class="fa-regular fa-user"></i>
                     </div>
-                    <input type="email" name="email" id="email" placeholder="Email">
+                    {{form.email}}
                 </div>
+                {% if form.email.errors %}
+                    <p class="field-error">
+                        {{form.email.errors|join:", "}}
+                    </p>
+                {% endif %}
                 <p class="field-error hidden">Please enter a valid email</p>
                 
                 <div class="form-set">
                     <div class="icon-label">
                         <i class="fa-solid fa-lock"></i>
                     </div>
-                    <input type="password" name="password" id="password" placeholder="Password" >
+                    {{form.password}}
                     <div class="password-toggler">
                         <i class="fa-solid fa-eye"></i>
                     </div>
                 </div>
-                <p class="field-error hidden">Please enter a valid password</p>
-                
-                <a href="#" class="reset-link">
+                {% if form.password.errors %}
+                    <p class="field-error">
+                        {{form.password.errors|join:", "}}
+                    </p>
+                {% endif %}
+                <p class="field-error hidden">Password field must not be empty</p>
+   
+                <a href="{% url 'request-reset-password' %}" class="reset-link">
                     forgot your password?
                 </a>
     
@@ -53,8 +63,11 @@
     </div>
 
     {% block login_script %}
+    <script src="{% static 'main/js/utils/email-validator.js' %}"></script>
+    <script src="{% static 'main/js/utils/password-toggler.js' %}">
+    </script>
     <script src="{% static 'main/js/components/signin-form.js' %}"></script>
-    <script src="{% static 'main/js/components/password-toggler.js' %}"></script>
+
     {% endblock login_script %}
 {% endblock content %}
 

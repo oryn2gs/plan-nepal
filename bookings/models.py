@@ -32,7 +32,6 @@ class Booking(models.Model):
     payments_done = models.BooleanField(default=False)
     booked_on = models.DateTimeField(auto_now_add=True)
 
-    # ! add payments when necessary
 
     def __str__(self) -> str:
         return f"Bookings made by {self.user.email} for {self.package.name}"
@@ -43,7 +42,6 @@ class Booking(models.Model):
 
             self.total_price = round(final_price_after_discount * (self.kids + self.adults), 2)
         return super().save(*args, **kwargs)
-        #Todos: change it based on pricing(for kids and adults)
         
 
 

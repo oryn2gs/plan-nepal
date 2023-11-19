@@ -64,91 +64,58 @@ class PackageDetailPage(UserPassesTestMixin, generic.DetailView):
         context_data['tour_timeline'] = TourTimeline.objects.filter_instance_related_to_package(
             package_slug = instance.slug
             )
+        
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            profile = user.profile
+            initial_data = {
+                "firstname": profile.firstname,
+                "lastname": profile.lastname,
+                "date_of_birth": profile.date_of_birth,
+                "country": profile.country,
+                "country_code": profile.country_code,
+                "phone_number": profile.phone_number,
+                "gender": profile.gender
+            }
+            context_data["user_profile_form"] = self.user_form(
+                initial=initial_data
+            )
+        else: 
+            context_data["user_profile_form"] = self.user_form()
         context_data["booking_form"] = self.booking_form()
-        context_data["user_form"] = self.user_form()
         return context_data
     
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         user = request.user
-        form = self.booking_form(data=request.POST)
-        if form.is_valid():
-            booking = form.save(commit=False)
+        profile = user.profile
+
+        booking_form = self.booking_form(data=request.POST)
+        user_form = self.user_form(
+            instance=profile, data=request.POST
+            )
+        if booking_form.is_valid() and user_form.is_valid():
+            user_form.save()
+            booking = booking_form.save(commit=False)
             booking.user = user
             booking.package = self.object
             booking.save()
             messages.success(request, "Bookings created successfully.")
-            # send booking message
+            from packages.emails import send_booking_confirmation_email
+            from django.core.exceptions import ValidationError
+            if not send_booking_confirmation_email(self.request, user, booking):
+                raise ValidationError(
+                    "Unable to send email at the moment, please try again", code="bad_request")
+
             return HttpResponseRedirect(reverse('package-detail', kwargs={
                 'package_slug': self.object.slug
             }))
         
         context = self.get_context_data(object=self.object)  
-        context["booking_form"] = form
+        context["booking_form"] = booking_form
+        context["user_profile_form"] = user_form
         return render(
             request, self.template_name, context)
-
-
-
-#------------------------------------------
-# class PackageDetailPage(UserPassesTestMixin, generic.DetailView):
-#     model = Package
-#     context_object_name = 'package'
-#     template_name = 'packages/package-detail.html'
-#     slug_url_kwarg = 'package_slug'
-#     form_class = BookingForm
-
-#     def test_func(self):
-#         if self.request.method == 'POST':
-#             return self.request.user.is_authenticated # if method POST meaning booking creation user need to be authenticated
-#         return True
-    
-
-#     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-#         context_data = super().get_context_data(**kwargs)
-#         instance = self.get_object()
-
-#         context_data['tour_timeline'] = TourTimeline.objects.filter_instance_related_to_package(
-#             package_slug = instance.slug
-#             )
-#         context_data["form"] = self.form_class()
-#         return context_data
-    
-#     def post(self, request, *args, **kwargs):
-#         self.object = self.get_object()
-#         user = request.user
-#         form = self.form_class(data=request.POST)
-#         if form.is_valid():
-#             booking = form.save(commit=False)
-#             booking.user = user
-#             booking.package = self.object
-#             booking.save()
-#             messages.success(request, "Bookings created successfully.")
-#             return HttpResponseRedirect(reverse('package-detail', kwargs={
-#                 'package_slug': self.object.slug
-#             }))
-        
-#         context = self.get_context_data(object=self.object)  
-#         context["form"] = form
-#         return render(
-#             request, self.template_name, context)
-        
-#---------------------------
-# class PackageDetailPage(generic.DetailView):
-#     model = Package
-#     context_object_name = 'package'
-#     template_name = 'packages/package-detail.html'
-#     slug_url_kwarg = 'package_slug'
-
-#     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-#         context_data = super().get_context_data(**kwargs)
-#         instance = self.get_object()
-
-#         context_data['tour_timeline'] = TourTimeline.objects.filter_instance_related_to_package(
-#             package_slug = instance.slug
-#             )
-#         return context_data
-    
 
 
 

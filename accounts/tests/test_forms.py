@@ -31,8 +31,6 @@ class EmailFormFieldTestCase(TestCase):
             "email": "wronguser@email.com"
         }
         form = self.form_class(data=data)
-        if not form.is_valid():
-            print(form.errors)
 
         self.assertFalse(form.is_valid())
         self.assertIn("email", form.errors)
@@ -85,7 +83,6 @@ class UserLoginFormTestCase(TestCase):
 
         self.user = User.objects.create_user(**self.form_data)
 
-
     def test_login_form_valid(self) -> None:
         form = UserLoginForm(data=self.form_data)
         self.assertTrue(form.is_valid(), form.errors)
@@ -96,6 +93,13 @@ class UserLoginFormTestCase(TestCase):
         form = UserLoginForm(data=self.form_data)
         self.assertFalse(form.is_valid(), form.errors)
         self.assertIn("User with that email does not exists!", form.errors["email"])
+    
+    def test_login_form_invalid_password_no_match(self) -> None:
+        self.form_data['password'] = "wrongpassword"
+        
+        form = UserLoginForm(data=self.form_data)
+        self.assertFalse(form.is_valid(), form.errors)
+        self.assertIn("Please enter a valid password", form.errors["password"])
         
 
 

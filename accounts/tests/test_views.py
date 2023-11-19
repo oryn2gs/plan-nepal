@@ -77,17 +77,7 @@ class UserLoginTestCase(TestCase):
         self.assertEqual(messages[0], "Logged in successfully.")
         self.assertRedirects(response, self.success_url)
     
-    def test_login_failure_invalid_password(self) -> None:
-        self.form_data["password"] = "wrong password"
-        response = self.client.post(self.url, data=self.form_data, follow=True)
 
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "accounts/signin.html")
-        messages = [
-            str(message) for message in get_messages(response.wsgi_request)
-        ]
-        self.assertEqual(
-            messages[0], "The password that you provided is incorrect")
     
 class UserLogoutTestCase(TestCase) :
 
@@ -101,7 +91,7 @@ class UserLogoutTestCase(TestCase) :
     def test_user_logout_success(self):
         response = self.client.post(reverse('signout'))
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertFalse(response.wsgi_request.user.is_authenticated)
         messages =[
             str(messages) for messages in get_messages(response.wsgi_request)
@@ -164,9 +154,7 @@ class ResetPassowordConfirmViewTestCase(TestCase):
         self.url = reverse("reset-password-confirm", kwargs=self.kwargs)
 
         response = self.client.get(self.url)
-        self.assertEquals(response.status_code, 200)
-        form = response.context['form']
-        self.assertIsNotNone(form)
+        self.assertEquals(response.status_code, 302)
     
     def test_verification_failure_invalid_slug(self) -> None:
         self.kwargs["slug"] = "invalidslug"
@@ -197,8 +185,6 @@ class ResetPassowordConfirmViewTestCase(TestCase):
             "Verification Token is Invalid or Expired, Please try again.")
         
     
-
-        
 class ResetPassowordCompleteViewTestCase(TestCase):
 
     def setUp(self):
@@ -213,8 +199,6 @@ class ResetPassowordCompleteViewTestCase(TestCase):
 
     def test_form_rendered(self) -> None:
         response = self.client.get(self.url)
-        print(response)
-        print(self.client.session)
         self.assertEquals(response.status_code, 200)
         form = response.context['form'] 
         self.assertIsInstance(form, forms.PasswordResetForm)

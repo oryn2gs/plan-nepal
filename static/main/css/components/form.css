@@ -2,20 +2,16 @@
   .form-container {
     @apply p-6 bg-primaryColor rounded-lg shadow flex gap-10 flex-col   md:flex-row max-w-[343px]  md:max-w-[800px];
 
-    &.booking {
-      @apply md:max-w-full;
-    }
-
     /* image styles */
     .form-image {
-      @apply flex-1 shrink flex-grow rounded-lg overflow-hidden;
+      @apply flex-1 basis-1/2  flex-grow   rounded-lg overflow-hidden;
       img {
         @apply h-full object-cover object-center;
       }
     }
 
     .form {
-      @apply flex-1 flex flex-col gap-6 items-center;
+      @apply flex-1 basis-1/2 flex flex-col gap-6 items-center;
 
       .form-header {
         @apply section__header mb-4;
@@ -40,7 +36,7 @@
           @apply bg-primaryColor p-0 flex-grow;
         }
 
-        /* for toogle menu in FAQ page */
+        /* * for toogle menu in FAQ page */
         .custom-select {
           @apply flex-grow relative;
 
@@ -54,7 +50,6 @@
         }
 
         /* content menu in FAQ section */
-
         .icon-label {
           @apply text-fontColorAccent flex items-center justify-center transform rotate-0 transition-transform duration-300 ease-in-out;
 
@@ -84,24 +79,7 @@
         @apply text-smMb font-thin self-end -mt-3;
       }
     }
-
-    /* ? multipart form */
-    .multipart-form {
-      @apply flex-1 flex flex-col justify-between;
-
-      .form-header {
-        @apply section__header mb-4;
-      }
-
-      /* timeline */
-
-      .formset {
-        @apply grow flex items-center;
-
-        .form-section {
-          @apply flex justify-between;
-        }
-      }
-    }
   }
+
+  /* -----------booking-form */
 }

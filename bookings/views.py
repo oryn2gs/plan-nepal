@@ -22,43 +22,6 @@ from bookings.models import (
 )
 
 
-@login_required
-@require_POST
-def create_booking(request, package_slug:str) -> HttpResponseRedirect:
-
-    if request.method.lower() == "post":
-        data = request.POST
-        user = request.user
-
-        redirect_url = reverse('package-detail', kwargs={
-            'package_slug': package_slug
-            }) 
-        
-        try:
-            package = get_object_or_404(Package, slug=package_slug)
-            booking_made = Booking.objects.create(
-                user = user,
-                package = package,
-                kids = int(data.get("kids")),
-                adults = int(data.get("adults")),
-                arrival_time = data.get("arrival_time"),
-                arrival_date = data.get("arrival_date"),
-                airlines = data.get("airlines"),
-                flight_number = data.get("flight_number"),
-                airport_pickup= data.get("airport_pickup"),
-                message = data.get("message"),
-            )
-            if booking_made:
-                messages.success(request, "Bookings made succefully, we\'ve sent a confirmation message to your email")
-                # ?  send Bookings emails
-            else:
-                raise Exception("Unable to create bookings at the moment please try again")
-         
-        except Exception as e:
-            messages.error(request, str(e))
-
-        return HttpResponseRedirect(redirect_url)
-
 
 
 class FaqListView(generic.ListView):

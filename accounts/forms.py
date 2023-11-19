@@ -189,7 +189,35 @@ class PasswordResetForm(forms.Form):
             raise ValidationError("Password and confirm password must match.")
 
         return cleaned_data
-    
+
+from django.forms import widgets
+import pycountry
+from pycountrycode.countrycode import get_code
+
+class CountryChoiceField(forms.ChoiceField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            choices=[(country.name, country.name) for country in pycountry.countries],
+            widget=widgets.Select(
+                attrs={
+                    'class': 'country-select'
+                    }),
+            *args, **kwargs
+        )
+
+class CountryCodeChoiceField(forms.ChoiceField):
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            choices=[
+                (get_code(country.name), f"{country.alpha_2} {country.flag}") 
+                for country in pycountry.countries
+            ],
+            widget=widgets.Select(
+                attrs={
+                    'class': 'country-code-select'
+                    }),
+            *args, **kwargs
+        )  
 
 class UserProfileForm(forms.ModelForm):
     date_of_birth = forms.DateField(
@@ -201,35 +229,15 @@ class UserProfileForm(forms.ModelForm):
             
         ),
     )
+    country = CountryChoiceField()
+    country_code = CountryCodeChoiceField()
     
+
     class Meta:
         model = Profile 
         fields = "__all__"
         exclude = ["user"]
 
     
-# ---Rendering none field errors in templates
-# <form method="post">
-#     {% csrf_token %}
-#     {{ form.as_p }}
-
-#     {% if form.errors %}
-#         <ul>
-#             {% for field, errors in form.errors.items %}
-#                 {% if field == '__all__' %}
-#                     {% for error in errors %}
-#                         <li>
-#                             {% if error.code == "invalid_value" %}
-#                                 Invalid Value Error: {{ error.message }}
-#                             {% endif %}
-#                         </li>
-#                     {% endfor %}
-#                 {% endif %}
-#             {% endfor %}
-#         </ul>
-#     {% endif %}
-
-#     <input type="submit" value="Submit">
-# </form>
 
 

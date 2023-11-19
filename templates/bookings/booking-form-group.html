@@ -1,0 +1,71 @@
+{% load static %}
+
+{% block booking_form %}
+
+<div class="multipart-form" id="booking-form">
+    <div class="image-section">
+        <img src="{% static 'main/images/booking.png' %}" alt="">
+    </div>
+
+    <form class="bookings-form__group" method="POST" id="booking-form">
+        {% csrf_token %}
+   
+        <p class="section__header text-center">
+            Book Now
+        </p>
+
+        <!-- add toggle button -->
+        <div class="progress-bar" id="progress-bar">
+                <div class="progress-line">
+                    <div class="progress-tracker"></div>
+                </div>
+        </div>
+
+        <div class="slide-track">
+            <div class="form-section" id="form-section">
+
+                {% include 'bookings/user-form.html' %}
+                
+                {% include 'bookings/booking-form.html' %}
+    
+                <!--?? message container  -->
+                <div class="form">
+                    <div class="field-section">
+                        <div class="form-group">
+                            <div class="form-set">
+                                {{booking_form.message.label}}
+                                <div class="input-field">
+                                    {{booking_form.message}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline" id="booking_button">
+                        <div class="inner">
+                            Submit
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+       
+       
+          
+      
+    </form> 
+
+</div>
+
+    
+{% endblock booking_form %}
+
+
+{% block bookings_script %}
+    <script src="{% static 'main/js/components/booking-form-group.js' %}"></script>
+
+{% endblock bookings_script %}
+    
+    
+
+

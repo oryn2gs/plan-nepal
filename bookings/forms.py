@@ -48,20 +48,7 @@ class BookingForm(forms.ModelForm):
     arrival_time = forms.TimeField(
         widget=forms.TimeInput(attrs={'type': 'time'}),
     )
-    airlines = forms.CharField(
-       widget=forms.TextInput(
-           attrs={
-               "placeholder": "Airlines"
-           }
-       )
-    )
-    flight_number = forms.CharField(
-       widget=forms.TextInput(
-           attrs={
-               "placeholder": "Flight Number"
-           }
-       )
-    )
+
     airport_pickup = forms.BooleanField(
         required=False,
         widget=forms.CheckboxInput(

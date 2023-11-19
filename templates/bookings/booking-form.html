@@ -1,63 +1,71 @@
-{% load static %}
 
 {% block booking_form %}
 
-<div class="form-container booking" id="booking-form">
-    <div class="form-image">
-        <img src="{% static 'main/images/faq-form-image.png' %}" alt="">
-    </div>
+<div class="form" id="booking-section">
 
-    
+    <div class="field-section">
+        <p class="text-center font-semibold">No. of people</p>
+        <div class="form-group two">
 
-    <form class="form" method="POST" id="booking-form">
-        {% csrf_token %}
-   
-        <p class="form-header">Book Now</p>
-        
-        <!-- hidden fieldfs -->
-        {{booking_form.user}}
-        <div class="form-set hidden">
-            <i class="fa-solid fa-person-hiking"></i>
-            {{booking_form.package}}
-            <span>{{package.name}}</span>
-        </div>
-
-
-        <p class="section-title">No. of people</p>
-        <div class="section">
             <div class="form-set">
-                {{booking_form.kids.label}}:
-                {{booking_form.kids}}
+                {{booking_form.kids.label}}
+                <div class="input-field">
+                    {{booking_form.kids}}
+                </div>
             </div>
-            <div class="form-set">
-                {{booking_form.adults.label}}:
-                {{booking_form.adults}}
+            <div class="w-full">
+                <div class="form-set">
+                    {{booking_form.adults.label}}
+                    <div class="input-field">
+                        {{booking_form.adults}}
+                    </div>
+                </div>
+                <p class="field-error hidden">This field is required</p>
             </div>
 
         </div>
         
-        <p class="section-title">Arrival Details</p>
-        <div class="section -mb-2">
-            <div class="form-set">
-                <i class="fa-solid fa-plane-arrival"></i>
-                {{booking_form.arrival_date}}
+        <p class="text-center font-semibold">Arrival Details</p>
+        <div class="form-group two">
+            <div class="w-full">
+                <div class="form-set">
+                    {{booking_form.arrival_date.label}}
+                    <div class="input-field">
+                        {{booking_form.arrival_date}}
+                    </div>
+                </div>
+                <div class="field-error hidden">This field is required</div>
             </div>
-            <div class="form-set">
-                <i class="fa-solid fa-plane-arrival"></i>
-                {{booking_form.arrival_time}}
+            <div class="w-full">
+                <div class="form-set">
+                    {{booking_form.arrival_time.label}}
+                    <div class="input-field">
+                        {{booking_form.arrival_time}}
+                    </div>
+                </div>
+                <div class="field-error hidden">This field is required</div>
             </div>
 
         </div>
 
-        <div class="section">
-            <div class="form-set">
-                <i class="fa-solid fa-plane"></i>
-
-                {{booking_form.airlines}}
+        <div class="form-group two">
+            <div class="w-full">
+                <div class="form-set">
+                    {{booking_form.airlines.label}}
+                    <div class="input-field">
+                        {{booking_form.airlines}}
+                    </div>
+                </div>
+                <p class="field-error hidden">This field is required.</p>
             </div>
-            <div class="form-set">
-                <i class="fa-solid fa-plane-departure"></i>
-                {{booking_form.flight_number}}
+            <div class="w-full">
+                <div class="form-set">
+                    {{booking_form.flight_number.label}}
+                    <div class="input-field">
+                        {{booking_form.flight_number}}
+                    </div>
+                </div>
+                <p class="field-error hidden">This field is required.</p>
             </div>
 
         </div>
@@ -68,35 +76,16 @@
         <div class="w-11 h-6 bg-fontColorAccent peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-fontColorAccent after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-fontMainColor"></div>
         <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{booking_form.airport_pickup.label}}</span>
         </label>
-        
-        <div class="form-set">
-            {{booking_form.message}}
+ 
+    </div>
+
+   
+    <button type="button" class="btn btn-outline" id="booking_form_button">
+        <div class="inner">
+            Next Step
         </div>
-
-        {{user_form.as_p}}
-       
-
-        <button type="submit" class="btn btn-outline-dark" id="booking_button">
-            <div class="inner w-full bg-primaryColor">
-                Submit
-            </div>
-        </button>
-          
-      
-    </form> 
-
+    </button>
 </div>
-
-
     
 {% endblock booking_form %}
-
-
-{% block bookings_script %}
-    <script src="{% static 'main/js/components/booking-form.js' %}"></script>
-
-{% endblock bookings_script %}
     
-    
-
-

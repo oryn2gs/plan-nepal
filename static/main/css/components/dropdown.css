@@ -1,6 +1,6 @@
 @layer components {
   .dropdown {
-    @apply cursor-pointer relative;
+    @apply w-8 h-8 rounded-full cursor-pointer relative;
 
     .dropdown-menu {
       @apply hidden w-44 bg-primaryColor rounded-lg shadow mt-4 absolute top-full right-0;

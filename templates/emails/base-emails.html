@@ -1,0 +1,110 @@
+<!-- templates/emails/booking_confirmation_email.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap");
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+        body {
+            --header-font: "Bubblegum sans", sans-serif;
+            --main-color: #fcfcfc;
+            --font-color: #31295F;
+            --font-accent: #c9c9c9;
+            margin: 0;
+            padding: 0;
+            background-color: var(--main-color);
+            color: var(--font-color);
+            font-family: "Roboto", sans-serif;
+            font-size: 1.2rem;
+        }
+
+        a  {
+            text-decoration: none;
+            color: var(--color);
+            cursor: pointer;
+        }
+
+        a:hover {
+            opacity: .8;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 1rem;
+        }
+
+     
+        
+    </style>
+</head>
+<body>
+    <div style="max-width: 800px;padding: 1rem;margin: 0 auto;">
+        <header style="padding: .8rem;width: 100%;display: flex;align-items: center;justify-content: center;">
+            <a href="{{ protocol}}://{{domain}}{% url 'homepage' %}" style="display: flex;align-items: center;gap: 1rem;margin: 0 auto;">
+                <div style="font-size: 2.5rem;color: #62E6B9;">
+                    <i class="fa-brands fa-deskpro"></i>
+                </div>
+                <p style="font-family: var(--header-font);font-size: 2rem;">Plan Nepal</p>
+            </a>
+        </header>
+
+    
+    {% block content %}
+    
+        
+    {% endblock content %}
+        
+
+    <footer style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+
+        <ul class="flex gap-1 item-center" style="display: flex; gap: 1rem;align-items: center;">
+            <li>
+                <a href="https://www.facebook.com/plannepal/" class="icon facebook" style="height: 2rem; width: 2rem;display: flex;align-items: center;justify-content: center;cursor: pointer;border-radius: 100%;border: 2px solid var(--font-color);">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://twitter.com/plannepaltravel" class="icon twitter" style="height: 2rem; width: 2rem;display: flex;align-items: center;justify-content: center;cursor: pointer;border-radius: 100%;border: 2px solid var(--font-color);">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/nepal_tourtrek/" class="icon instagram" style="height: 2rem; width: 2rem;display: flex;align-items: center;justify-content: center;cursor: pointer;border-radius: 100%;border: 2px solid var(--font-color);">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.pinterest.com/plannepaltravel/" class="icon pinterest" style="height: 2rem; width: 2rem;display: flex;align-items: center;justify-content: center;cursor: pointer;border-radius: 100%;border: 2px solid var(--font-color);">
+                    <i class="fa-brands fa-pinterest-p"></i>
+                </a>
+            </li>
+        </ul>
+        <div style="margin: 0 auto; font-size: 12px;color: var(--font-accent); text-align: center;">
+            <p>
+                <i class="fa-regular fa-copyright"></i>
+                copyrights 2023, all rights reserve to Plan Nepal
+            </p> 
+            <p>
+                plannepal@info.com
+            </p>
+            <p>
+            +977-9851093862, +977-01-4435300
+            </p>
+        </div>
+        
+    </footer>
+
+    </div>
+
+    
+
+</body>
+</html>

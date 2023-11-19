@@ -17,7 +17,7 @@
             From
             <span class="text-smallHeaderMb md:text-smallHeader font-bold">
 
-                ${{package.get_final_price_after_discount}}
+                NPR {{package.get_final_price_after_discount}}
             </span>
         </p>
 
@@ -74,7 +74,7 @@
         <p>{{package.cost_information}}</p>
 
 
-        {% include 'bookings/booking-form.html' %}
+        {% include 'bookings/booking-form-group.html' %}
   
     </div>
 

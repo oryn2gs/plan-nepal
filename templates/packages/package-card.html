@@ -1,7 +1,6 @@
 
 {% block package_card %}
 
-
     {% if error %}
         <p class="text-center text-fontColorAccent font-light">{{error}}</p>
     {% endif %}
@@ -29,7 +28,7 @@
                     <p class="flex flex-col -gap-1 text-smMb sm:text-re
                     gular font-semibold">
                         <span class="text-sm md:text-smMb">From</span>
-                        $ {{package.get_final_price_after_discount}}
+                        NPR {{package.get_final_price_after_discount}}
                     </p>
 
                     <a href="{% url 'package-detail' package.slug %}" class="btn btn-outline-dark">
@@ -42,8 +41,11 @@
             </div>
 
         </div>
+
         
     {% endfor %} 
+
+
         
 
 

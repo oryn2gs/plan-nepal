@@ -1,0 +1,110 @@
+
+{% block user_form %}
+
+    <div class="form" id="user-form">
+        <p class="text-center font-semibold">User information</p>
+        <div class="field-section">
+            <div class="form-group two">
+                <div class="w-full">
+                    <div class="form-set">
+                        {{user_profile_form.firstname.label}}
+                        <div class="input-field">
+                            {{user_profile_form.firstname}}
+                        </div>
+                    </div>
+                    <p class="field-error hidden">This field is required</p>
+
+                </div>
+                <div class="w-full">
+                    <div class="form-set">
+                        {{user_profile_form.lastname.label}}
+                        <div class="input-field">
+                            {{user_profile_form.lastname}}
+                        </div>
+                    </div>
+                    <p class="field-error hidden">This field is required</p>
+                </div>
+            </div>
+            
+            <div class="form-group two">
+                <div class="w-full">
+                    <div class="form-set">
+                        {{user_profile_form.date_of_birth.label}}
+                        <div class="input-field">
+                            {{user_profile_form.date_of_birth}}
+                        </div>
+                    </div>
+                    <p class="field-error hidden">This field is required</p>
+                </div>
+                <div class="w-full">
+                    <div class="form-set">
+                        {{user_profile_form.gender.label}}
+                        <div class="input-field">
+                            {{user_profile_form.gender}}
+                        </div>
+                    </div>
+                    <p class="field-error hidden">This field is required</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="w-full">
+                    <div class="form-set">
+                        {{user_profile_form.country.label}}
+                        <div class="input-field">
+                            {{user_profile_form.country}}
+                        </div>
+                    </div>
+                    <p class="field-error hidden">This field is required</p>
+                </div>
+            </div>
+            <div class="form-group phone-number">
+                <div class="w-full">
+                    <div class="form-set">
+                        Code
+                        <div class="input-field">
+                            {{user_profile_form.country_code}}
+                        </div>
+                    </div>
+                    <p class="field-error hidden">This field is required</p>
+                </div>
+                <div class="w-full">
+                    <div class="form-set">
+                        {{user_profile_form.phone_number.label}}
+                        <div class="input-field">
+                            {{user_profile_form.phone_number}}
+                        </div>
+                    </div>
+                    <p class="field-error hidden">This field is required</p>
+                </div>
+    
+            </div>
+
+        </div>
+
+        <button type="button" class="btn btn-outline" id="user_profile_button">
+            <div class="inner">
+                Next Step
+            </div>
+        </button>
+    </div>
+
+
+    
+    <script>
+        const firstname = document.getElementById("id_firstname")
+        const lastname = document.getElementById("id_lastname")
+        const dateOfBirth = document.getElementById("id_date_of_birth")
+        const gender = document.getElementById("id_gender")
+        const country = document.getElementById("id_country")
+        const countryCode = document.getElementById("id_country_code")
+        const phoneNumber = document.getElementById("id_phone_number")
+
+        const userFormFields = [firstname, lastname, dateOfBirth, gender, country, countryCode, phoneNumber]
+
+        const userProfileButton = document.getElementById("user_profile_button")
+    </script>
+        
+
+    
+{% endblock user_form %}
+    

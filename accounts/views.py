@@ -137,3 +137,5 @@ class ResetPasswordCompleteView(generic.FormView):
         instance.set_password(password)
         instance.save()
         return super().form_valid(form)
+
+

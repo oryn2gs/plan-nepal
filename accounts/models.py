@@ -108,7 +108,9 @@ class Profile(models.Model):
         ('transgender', 'Transgender')
     ]
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, 
+        on_delete=models.CASCADE)
     firstname = models.CharField(max_length=50, null=True, blank=True)
     lastname = models.CharField(max_length=50, null=True, blank=True)
     profile_image = models.ImageField(upload_to=profile_image_fs, null=True, blank=True)
@@ -118,7 +120,6 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=25, null=True, blank=True)
     gender = models.CharField(max_length=15, choices=GENDER_CHOICES)
     updated_on = models.DateTimeField(auto_now=True)
-
 
     def __str__(self):
         return str(self.user)

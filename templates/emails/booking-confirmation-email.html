@@ -1,0 +1,34 @@
+{% extends 'emails/base-emails.html' %}
+
+
+{% block content %}
+
+<section style="margin: 1rem;">
+    <p style="margin-top: 2rem;">Hello {{ profile.get_fullname }},</p>
+    
+    <p>Thank you for choosing Plan Nepal for your travel needs. We're dedicated to making your journey memorable and hassle-free, offering exciting adventures, cultural discoveries, and moments of relaxation.</p>
+
+    <p>Your satisfaction is our priority. Our team is here to assist you at every step. For inquiries or assistance with your travel arrangements, feel free to reach out. We're committed to ensuring your plans align perfectly with your expectations.</p>
+
+    <p>Best regards,<br>
+    Plan Nepal</p>
+</section>
+
+<section style="margin: 2rem 0;">
+    <p style="font-family: var(--header-font); text-align: center;padding: 1rem; font-size: 1.5rem; background-color: var(--font-color);color: var(--main-color);">
+        Booking Details
+    </p>
+    <ul>
+        <li style="display: flex; align-items: center;justify-content:space-between;padding: .5rem; margin-left: 0;"><strong>Order id</strong>{{ booking.id }}</li>
+        <li style="display: flex; align-items: center;justify-content:space-between;padding: .5rem; margin-left: 0;"><strong>Package Name</strong> {{ booking.package.name }}</li>
+        <li style="display: flex; align-items: center;justify-content:space-between;padding: .5rem; margin-left: 0;"><strong>Tour Duration</strong> {{ booking.package.duration }} days</li>
+        <li style="display: flex; align-items: center;justify-content:space-between;padding: .5rem; margin-left: 0;"><strong>Kids</strong> {{ booking.kids }}</li>
+        <li style="display: flex; align-items: center;justify-content:space-between;padding: .5rem; margin-left: 0;"><strong>Adults</strong> {{ booking.adults }}</li>
+
+        <li style="display: flex; align-items: center;justify-content:space-between;padding: .5rem; margin-left: 0;background-color: #f0f0f0;"><strong>Total</strong>NPR {{ booking.total_price }}</li>
+       
+    </ul>
+</section>
+    
+{% endblock content %}
+    

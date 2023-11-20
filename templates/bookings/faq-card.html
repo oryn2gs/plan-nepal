@@ -7,7 +7,7 @@
         <p class="text-center text-fontColorAccent font-light">{{error | safe}}</p>
     {% endif %}
         
-    {% for faq in faq_resolved %}
+    {% for faq in faqs %}
         <div class="faq-container">
             <div class="faq-question__container ">
                 <p class="faq-question flex-grow z-10">{{faq.question}}</p>
@@ -22,7 +22,7 @@
 
             </div>
             <p class="faq-answer hidden">
-                {{faq.inquiryanswer.content}}
+                {{faq.answer.content}}
             </p>
 
         </div>

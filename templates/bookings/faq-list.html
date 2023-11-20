@@ -3,46 +3,89 @@
 {% load static %}
 
 {% block content %}
-    <div class="my-10 flex flex-col item-center gap-10">
+    <!-- <div class="my-10 flex flex-col item-center gap-10"> -->
+    <div class="flex flex-col gap-10 md:gap-10 items-center">
         <div class="flex flex-col items-center gap-6">
             <p class="section__header">Frequently asked questions?</p>
             <div class="flex gap-1">
-                <button class="btn-pill active">
+                <a href="{% url 'faq-list' %}"  {% if not type_filter or type_filter == "all" or type_filter == "" %}class="btn-pill active" {% else %} class="btn-pill" {% endif %}>
                     All
-                </button>
-                <button class="btn-pill ">
+                </a>
+     
+                <a href="{% url 'faq-list' %}?type_filter=packages" {% if type_filter and type_filter == "packages" %}class="btn-pill active" {% else %} class="btn-pill" {% endif %}>
                     Packages
-                </button>
-                <button class="btn-pill ">
+                </a>
+                <a href="{% url 'faq-list' %}?type_filter=destination" {% if type_filter == "destination" %}class="btn-pill active" {% else %} class="btn-pill" {% endif %}>
                     Destination
-                </button>
-                <button class="btn-pill ">
-                    Type
-                </button>
-                <button class="btn-pill ">
+                </a>
+                <a href="{% url 'faq-list' %}?type_filter=pricing" {% if type_filter == "pricing" %}class="btn-pill active" {% else %} class="btn-pill" {% endif %}>
                     Pricing
-                </button>
+                </a>
+                <a href="{% url 'faq-list' %}?type_filter=tickets" {% if type_filter == "tickets" %}class="btn-pill active" {% else %} class="btn-pill" {% endif %}>
+                    Tickets
+                </a>
                 
-                {% if user.is_authenticated and user.is_staff %}
-                <button class="btn-pill ">
-                    Unresolved
-                </button>
-                    
-                {% endif %}
                     
             </div>
         </div>
+        
+        
+        {% if faqs %}
 
-        {% include 'bookings/faq-card.html' %}
-
-        <!-- add lazy loading 10-15 items -->
-        {% include 'bookings/faq-form.html' %}
+            <!-- FAQ Card  -->
+            {% include 'bookings/faq-card.html' %}
+            
+            <!--  pagination -->
+            <div class="pagination-desktop pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}" method="GET">
+                        previous
+                    </a>
+                    <a href="?page=1{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">1</a>
+                    {% endif %}
+                    
+                    {% for i in page_obj.paginator.page_range %}
+                    {% if i == page_obj.number %}    
+                    <span class="current">
+                        {{ page_obj.number }}
+                    </span>
+                    {% elif i > page_obj.number|add:"-2" and i < page_obj.number|add:"2" and page_obj.number|add:"1" < page_obj.paginator.num_pages and page_obj.number|add:"-1" > 1 %}
+                    <a href="?page={{ i }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">{{ i }}</a>
+                    {% elif i == page_obj.number|add:"-2" or i == page_obj.number|add:"2" %}
+                    <span class="ellipsis">...</span>
+                    {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">
+                        {{ page_obj.paginator.num_pages}}
+                    </a>
+                    <a href="?page={{ page_obj.next_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+            
+            <div class="pagination-mobile pagination">
+                <!-- Display a simplified version suitable for mobile view -->
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">prev</a>
+                    {% endif %}
+                    
+                    <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+            
+            {% endif %}
+            
+            {% include 'bookings/faq-form.html' %}
     </div>
 
-
-{% block script_faq %}
-<script type="module" src="{% static 'main/js/components/faq.js' %}"></script>
-{% endblock script_faq %}
 
 {% endblock content %}
     

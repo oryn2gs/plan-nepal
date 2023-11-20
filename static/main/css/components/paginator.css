@@ -1,0 +1,30 @@
+@layer components {
+  .pagination {
+    @apply p-1 mx-auto;
+    .step-links {
+      @apply flex items-center gap-4;
+
+      a {
+        @apply rounded-md px-3 br-font;
+      }
+    }
+  }
+
+  /* desktop */
+  .pagination-desktop {
+    @apply hidden md:block;
+
+    .current {
+      @apply rounded-md px-3 br-font bg-fontMainColor text-mainColor;
+    }
+  }
+
+  /* mobile */
+  .pagination-mobile {
+    @apply md:hidden;
+
+    a {
+      @apply bg-fontMainColor text-mainColor;
+    }
+  }
+}

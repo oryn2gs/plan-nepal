@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import (
     HttpResponseRedirect, 
     get_object_or_404, 
@@ -20,26 +21,36 @@ from bookings.models import (
     Inquiry,
     InquiryAnswer
 )
-
-
-
+from django.core.paginator import Paginator
 
 class FaqListView(generic.ListView):
-    model = Inquiry
-    context_object_name = 'inquiries'
+    paginate_by = 10
+    context_object_name = 'faqs'
     template_name = 'bookings/faq-list.html'
 
+    def get_queryset(self) -> QuerySet[Any]:
+        return Inquiry.objects.filter_inquiry_by_resolved_value(resolved=True)
    
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context_data = super().get_context_data(**kwargs)
-
-        context_data['faq_resolved'] = Inquiry.objects.filter_inquiry_by_resolved_value(resolved=True)
+        context_data['type_filter'] = kwargs.get("type_filter")
         
-        context_data['faq_unresolved'] = Inquiry.objects.filter_inquiry_by_resolved_value(resolved=False)
-        # # add pagintaino later for unresolved 
-        # ! create a filter tag for resolved
-
         return context_data
+    
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        queryset = self.get_queryset()
+        type_filter = request.GET.get("type_filter")
+        if type_filter:
+            queryset = queryset.filter(                  inquiry_type__iexact=type_filter
+                )
+        context = self.get_context_data(
+            object_list=queryset,
+            type_filter=type_filter)
+        return self.render_to_response(context)
+
+
     
 
 @login_required

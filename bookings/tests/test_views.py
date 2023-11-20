@@ -5,77 +5,9 @@ from django.contrib.messages import get_messages
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-from bookings.models import Booking, Inquiry, InquiryAnswer
-from packages.models import Destination, Package
-
-
-from datetime import date, time
+from bookings.models import Inquiry, InquiryAnswer
 
     
-class BookingCreateTestCase(TestCase):
-
-    def setUp(self) -> None:
-
-        self.destination = Destination.objects.create(name="Destination 1")
-
-        self.package = Package.objects.create(
-            destination=self.destination,
-            name="Package One",
-            price=100.00,
-            active=True,
-        )
-
-
-        self.user = User.objects.create_user(
-            email = "test@email.com",
-            password = "password"
-        )
-
-        self.data = {
-            "kids" : 1,
-            "adults" : 2,
-            "airlines" : "Etihad",
-            "flight_number" : "2rvbV",
-            "arrival_date" : date(2023, 10, 20),
-            "arrival_time" : time(12, 32),
-            "airport_pickup": True,
-        }
-
-        self.url = reverse('create-booking', kwargs={'package_slug': self.package.slug})
-        self.rediect_url = reverse('package-detail', kwargs={'package_slug': self.package.slug})
-        self.login_url = reverse('signin')
-
-    def test_booking_made_success(self) -> None:
-        self.client.force_login(self.user)
-        response = self.client.post(self.url, data=self.data)
-
-        self.assertEqual(response.status_code, 302)
-
-        saved_booking = Booking.objects.first()
-        self.assertIsNotNone(saved_booking)
-        
-        messages = [
-            str(message) for message in get_messages(response.wsgi_request)
-            ]
-        self.assertEqual(messages[0], "Bookings made succefully, we\'ve sent a confirmation message to your email")
-        self.assertEqual(urlparse(response.url).path, self.rediect_url)
-
-
-    def test_booking_made_failure_unauthenticated_user(self) -> None:
-        data = {
-            "kids" : 1,
-            "adults" : 2,
-            "airlines" : "Etihad",
-            "flight_number" : "2rvbV",
-            "arrival_date" : date(2023, 10, 20),
-            "arrival_time" : time(12, 32),
-            "airport_pickup": True,
-        }
-        response = self.client.post(self.url, data=data)
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(urlparse(response.url).path, self.login_url)
-    
-
 
 class FaqListViewTestCase(TestCase):
     

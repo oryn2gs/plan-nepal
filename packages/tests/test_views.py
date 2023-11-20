@@ -24,21 +24,22 @@ class HomepageTestCase(TestCase):
         )
 
         self.destination = Destination.objects.create(name = 'Destination 1')
-        self.type = Type.objects.create(name="Type 1")
+        self.type1 = Type.objects.create(name="Type 1")
+        self.type2 = Type.objects.create(name="Type 2")
         
         self.package1 = Package.objects.create(
             name = "Package 1",
             destination = self.destination,
             price = 100.00
         )
-        self.package1.type.add(self.type)
+        self.package1.type.add(self.type1)
         
         self.package2 = Package.objects.create(
             name = "Package 2",
             destination = self.destination,
             price = 100.00
         )
-        self.package2.type.add(self.type)
+        self.package2.type.add(self.type2)
 
         Testimonial.objects.bulk_create([
             Testimonial(user=self.user, content='test content for testimonial')
@@ -53,6 +54,15 @@ class HomepageTestCase(TestCase):
         self.assertTrue(response.context['packages']) 
         self.assertIn(self.package1, response.context['packages'])
         self.assertEqual(len(response.context['packages']), 2)
+
+    def test_packages_with_type_filter_in_context(self) -> None:
+        response = self.client.get(self.url, {"type_filter": "type 1"})
+        
+        self.assertEquals(response.status_code, 200)
+        self.assertTrue(response.context['packages']) 
+        self.assertIn(self.package1, response.context['packages'])
+        self.assertEqual(len(response.context['packages']), 1)
+
     
     def test_popular_in_context(self)-> None:
         response = self.client.get(self.url)

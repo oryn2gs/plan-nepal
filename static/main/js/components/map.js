@@ -2,7 +2,6 @@ const lat = 27.716367;
 const lng = 85.311636;
 
 var map = L.map("map").setView([lat, lng], 13);
-console.log(293572);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
@@ -27,5 +26,3 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 var marker = L.marker([lat, lng]).addTo(map);
 marker.bindPopup("Plan Nepal Pvt ltd");
-
-console.log(map);

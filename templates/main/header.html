@@ -1,6 +1,6 @@
 {% load static %}
 {% block header %}
-    <header class="w-screen max-w-screen-2xl flex items-center justify-between  mx-auto px-4 py-2 md:px-8 realtive">
+    <header class="w-screen max-w-screen-2xl flex items-center justify-between  mx-auto px-4 py-2 md:px-8 relative">
 
         <a href="{% url 'homepage' %}" class="flex items-center gap-2 ">
             <div class="text-4xl text-accentColor">
@@ -13,11 +13,10 @@
             <li>
                 <a href="{% url 'about-us' %}">About us</a>
             </li>
-  
-       
-
+            <li>
+                
         {% if user.is_authenticated %}      
-            <div class="w-8 h-8 dropdown account" id="dropdown-btn">
+            <div class="dropdown account" id="dropdown-btn">
                 <img src="{{user.profile.get_profile_image}}" alt="{{user.profile.username}}">
                 <div class="dropdown-menu hidden" id="dropdown-menu">
                     <ul>
@@ -34,7 +33,6 @@
                                     Signout
                                 </button>
                             </form>
-                     
                         </li>
                     </ul>
     
@@ -44,33 +42,34 @@
             
         {% else %}
 
-        <div class="dropdown authenticate" id="dropdown-btn">
-            <i class="fa-regular fa-user"></i>
+            <div class="dropdown authenticate" id="dropdown-btn">
+                <i class="fa-regular fa-user"></i>
 
-            <div class="dropdown-menu hidden" id="dropdown-menu">
-                <ul>
-                    <li>
-                        <a href="{% url 'signin' %}">
-                            Signin
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'signup' %}">
-                            Signup
-                        </a>
-                 
-                    </li>
-                </ul>
+                <div class="dropdown-menu hidden" id="dropdown-menu">
+                    <ul>
+                        <li>
+                            <a href="{% url 'signin' %}">
+                                Signin
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'signup' %}">
+                                Signup
+                            </a>
+                    
+                        </li>
+                    </ul>
+
+                </div>
 
             </div>
-
-        </div>
     
         {% endif %}
+            </li>
 
         </ul>
 
-        <div class="round-spot large absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 -z-50"></div>
+        <div class="round-spot large absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 -z-50 br-red"></div>
         
     </header>
     

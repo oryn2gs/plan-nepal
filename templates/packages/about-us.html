@@ -6,7 +6,7 @@
 {% block content %}
 <div class="flex my-10 flex-col gap-10 items-center md:gap-20">
     <!-- about us container  -->
-    <div class="md:my-16 flex flex-col gap-20 items-center w-full md:flex-row ">
+    <div class="md:my-16 flex flex-col gap-20 items-center w-full md:flex-row">
         <div class="flex-1 text-center md:text-left">
             <p class="section__header mb-6">
                 About us
@@ -17,16 +17,16 @@
         <div class="flex-1 ">
             <div class="about-us__image">
 
-                <div class="main-img">
+                <div class="main-img blur-load" data-src="{% static 'main/images/our-mission-1-small.png'}">
                     <img src="{% static 'main/images/our-mission-1.png' %}" alt="our-mission-1" loading="lazy">
                 </div>
 
-                <div class="second-img">
+                <div class="second-img blur-load" data-src="{% static 'main/images/our-mission-2-small.png'}">
                 <img src="{% static 'main/images/our-mission-2.png' %}" alt=""
                 class="object-cover object-center w-full h-full" loading="lazy">
                 </div>
                  
-                <div class="third-img">
+                <div class="third-img blur-load" data-src="{% static 'main/images/our-mission-3-small.png'}">
                 <img src="{% static 'main/images/our-mission-3.png' %}" alt="" class="object-cover object-center w-full h-full" loading="lazy">
                 </div>
 
@@ -52,24 +52,24 @@
             <div class="our-mission__image">
                 <div class="grid-item">
 
-                    <div class="flex-item">
+                    <div class="flex-item blur-load" data-src="{% static 'main/images/about-us-1-small.png'}">
                         <img src="{% static 'main/images/about-us-1.png' %}" alt="about us 1"  loading="lazy">
                     </div>
                 </div>
                 <div class="grid-item">
 
-                    <div class="flex-item">
+                    <div class="flex-item blur-load" data-src="{% static 'main/images/about-us-2-small.png'}">
                         <img src="{% static 'main/images/about-us-2.png' %}" alt="about us 2" loading="lazy">
                     </div>
                  
                 </div>
                 <div class="grid-item">
-                    <div class="flex-item">
+                    <div class="flex-item blur-load" data-src="{% static 'main/images/about-us-3-small.png'}">
                         <img src="{% static 'main/images/about-us-3.png' %}" alt="about us 3" loading="lazy">
                     </div>
                 </div>
                 <div class="grid-item">
-                    <div class="flex-item">
+                    <div class="flex-item blur-load" data-src="{% static 'main/images/about-us-4-small.png'}">
                         <img src="{% static 'main/images/about-us-4.png' %}" alt="about-us-4" loading="lazy">
                     </div>
                 </div>
@@ -129,18 +129,17 @@
             </div>
         </div>
 
-        <!-- maps -->
-        <!-- !fix the map on small screen -->
         <div id="map" class="flex-1 rounded-lg">
         </div>
-
-
 
 </div>
 </div>
 
 {% block map_script %}
     <script src="{% static 'main/js/components/map.js' %}"></script>
+    <script src="{% static 'main/js/components/image-lazy-loading.js' %}">
+    </script>
+
     
 {% endblock map_script %}
     

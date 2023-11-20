@@ -35,7 +35,7 @@
       @apply w-full h-full flex items-center justify-center relative;
 
       & > .flex-item {
-        @apply w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 shrink-0;
+        @apply w-32 h-32 sm:w-40 sm:h-40 lg:w-44 lg:h-44 shrink-0 rounded-full;
 
         img {
           @apply br-img w-full h-full rounded-full overflow-hidden grow shrink-0;
@@ -71,6 +71,29 @@
 
     & > .round-spot {
       @apply absolute top-0 right-0 -translate-x-1/2 -translate-y-1/2 -z-50;
+    }
+  }
+
+  /* -----> Blurry load */
+  .blur-load {
+    @apply bg-cover bg-center relative;
+    &::before {
+      @apply content-[''] absolute inset-0 animate-pulse;
+    }
+
+    img {
+      @apply opacity-0 transition-opacity duration-300 ease-in-out;
+    }
+
+    &.loaded {
+      @apply before:content-none;
+      &::before {
+        @apply content-none;
+      }
+      /* * set image opacit to 1 if the image is loaded */
+      img {
+        @apply opacity-100;
+      }
     }
   }
 }

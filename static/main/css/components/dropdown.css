@@ -7,7 +7,7 @@
     }
 
     .dropdown-menu {
-      @apply w-44 bg-primaryColor rounded-lg shadow mt-4 absolute top-full right-0;
+      @apply w-44 bg-primaryColor rounded-lg shadow mt-4 absolute top-full right-0 z-50 br-red;
 
       ul {
         @apply py-2;

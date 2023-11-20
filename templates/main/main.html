@@ -2,14 +2,17 @@
 
 
 {% block main %}
+
     {% include 'main/header.html' %}
+    
     {% include 'main/toast-message.html' %}
+    {% include 'main/loading-spinner.html' %}
     
     <div class="max-w-7xl w-full md:mx-auto px-4 flex-grow flex flex-col gap-10 md:gap-20 my-20">
         {% block content %}     
         {% endblock content %}
     </div>
   
-    
     {% include 'main/footer.html' %}
+    
 {% endblock main %}

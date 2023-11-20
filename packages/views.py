@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.views import generic
 from django.views.decorators.http import require_GET
@@ -8,7 +9,6 @@ from django.contrib import messages
 from packages.utils import _get_most_popular_packages, _get_types_list
 from packages.templatetags.custom_filters import filter_packages_by_type
 from packages.models import (
-    Type,
     Package, 
     TourTimeline
     )
@@ -21,19 +21,35 @@ from bookings.forms import BookingForm
 
 
 class Homepage(generic.ListView):
-    model = Package
+    paginate_by = 20
     context_object_name = 'packages'
     template_name = 'packages/homepage.html'
-    object = None
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return Package.objects.all()
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context_data = super().get_context_data(**kwargs)
         context_data['testimonials'] = Testimonial.objects.get_random_testimonial()
-      
         context_data['popular'] = _get_most_popular_packages()
         context_data['types'] = _get_types_list()
-        #!paginnated packages
+        context_data['type_filter'] = kwargs.get("type_filter")
+
         return context_data
+
+    def get(self, request, *args, **kwargs):
+        type_filter = request.GET.get("type_filter")
+        self.object_list = self.get_queryset()
+        queryset = self.get_queryset()
+
+        if type_filter:
+            queryset = queryset.filter(type__name__iexact=type_filter)
+
+        context = self.get_context_data(
+            object_list=queryset, type_filter=type_filter
+            )
+
+        return self.render_to_response(context)
 
 
 class AboutUsPage(generic.View):
@@ -136,8 +152,7 @@ def filter_packages(request) -> HttpResponse:
             'type': query
             })
         return HttpResponse(html_fragment.content)
-    
-    
+      
     except EmptyResultSet as empty_result_set:
         html_fragment = render(request, 'packages/package-card.html', {
             'error': str(empty_result_set)

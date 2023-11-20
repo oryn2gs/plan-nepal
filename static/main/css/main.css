@@ -21,6 +21,7 @@
 @import "./components/timeline.css";
 @import "./components/package-type-slider.css";
 @import "./components/testimonial-slider.css";
+@import "./components/paginator.css";
 
 @import "tailwindcss/utilities";
 @import "./utilities/utilities.css";

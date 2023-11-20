@@ -1,30 +1,9 @@
 from django import forms
 from bookings.models import (
-    Inquiry,
     Booking
     )
-from packages.models import Package
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
-
-class InquiryAdminForm(forms.ModelForm):
-    inquiry_answer_content = forms.CharField(
-        required=False,
-        label='Inquiry Answer',
-        widget=forms.Textarea(attrs={'rows': 3}),
-    )
-    class Meta:
-        model = Inquiry
-        fields = '__all__'
-
-
-# bookings form
-# class PackageForm(forms.ModelForm):
-
-#     class Meta:
-#         model = Package
-#         fields = "__all__"
 
 
 class BookingForm(forms.ModelForm):
@@ -71,7 +50,8 @@ class BookingForm(forms.ModelForm):
         model = Booking
         fields = "__all__"
         exclude = [
-            "user", "package",  "total_price", "bookings_fullfilled", "payments_done",]
+            "user", "package",  "total_price", "bookings_fullfilled", "payments_done"
+            ]
         
 
    

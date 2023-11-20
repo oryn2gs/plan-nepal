@@ -4,7 +4,7 @@
 
     /* image styles */
     .form-image {
-      @apply flex-1 basis-1/2  flex-grow   rounded-lg overflow-hidden;
+      @apply flex-1 basis-1/2  flex-grow  rounded-lg overflow-hidden;
       img {
         @apply h-full object-cover object-center;
       }

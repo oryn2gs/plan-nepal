@@ -52,10 +52,10 @@
                     </button>
 
                     <div class="slide hide-scrollbar" id="package-slide">
-                        <button class="btn-pill active">All</button>
+                        <a href="{% url 'homepage' %}" {% if not type_filter or type_filter == "all" or type_filter == "" %}class="btn-pill active" {% else %} class="btn-pill" {% endif %}>All</a>
         
                         {% for type in types %}
-                        <button class="btn-pill">{{type}}</button>
+                        <a href="{% url 'homepage' %}?type_filter={{type}}" {% if type_filter == type %}class="btn-pill active" {% else %} class="btn-pill" {% endif %}>{{type}}</a>
                         {% endfor %}     
         
                     </div>
@@ -63,13 +63,64 @@
                         <i class="fa-solid fa-chevron-right"></i>
                     </button>
                 </div>
+             
 
             </div>
+            
+            {% if packages %}
+                 
             <div class="flex items-center justify-center flex-wrap gap-4 transition-all transition-300" id="card-container" >
-
+                
                 {% include 'packages/package-card.html' %}
             </div>
-    
+            
+            <!-- ! pagination -->
+            <div class="pagination-desktop pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}" method="GET">
+                        previous
+                    </a>
+                    <a href="?page=1{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">1</a>
+                    {% endif %}
+                    
+                    {% for i in page_obj.paginator.page_range %}
+                        {% if i == page_obj.number %}    
+                            <span class="current">
+                                {{ page_obj.number }}
+                            </span>
+                        {% elif i > page_obj.number|add:"-2" and i < page_obj.number|add:"2" and page_obj.number|add:"1" < page_obj.paginator.num_pages and page_obj.number|add:"-1" > 1 %}
+                            <a href="?page={{ i }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">{{ i }}</a>
+                        {% elif i == page_obj.number|add:"-2" or i == page_obj.number|add:"2" %}
+                        <span class="ellipsis">...</span>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.paginator.num_pages }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">
+                        {{ page_obj.paginator.num_pages}}
+                    </a>
+                    <a href="?page={{ page_obj.next_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+
+            <div class="pagination-mobile pagination">
+                <!-- Display a simplified version suitable for mobile view -->
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">prev</a>
+                    {% endif %}
+            
+                    <span class="current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if type_filter %}&type_filter={{ type_filter }}{% endif %}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+            
+            {% endif %}
     
     
         </section>
@@ -157,7 +208,6 @@
 
 
 {% block homepage_script %}
-    <script type="module" src="{% static 'packages/js/services.js' %}"></script>
     <script src="{% static 'packages/js/package-slide.js' %}"></script>
     <script src="{% static 'packages/js/testimonial-carousel.js' %}"></script>
 {% endblock homepage_script %}

@@ -13,15 +13,13 @@
             <li>
                 <a href="{% url 'about-us' %}">About us</a>
             </li>
-            <li>
-
-            </li>
+  
        
 
         {% if user.is_authenticated %}      
-            <div class="w-8 h-8 rounded-full dropdown account" id="dropdown-btn">
+            <div class="w-8 h-8 dropdown account" id="dropdown-btn">
                 <img src="{{user.profile.get_profile_image}}" alt="{{user.profile.username}}">
-                <div class="dropdown-menu" id="dropdown-menu">
+                <div class="dropdown-menu hidden" id="dropdown-menu">
                     <ul>
                         <li>
                             <a href="#">
@@ -49,7 +47,7 @@
         <div class="dropdown authenticate" id="dropdown-btn">
             <i class="fa-regular fa-user"></i>
 
-            <div class="dropdown-menu" id="dropdown-menu">
+            <div class="dropdown-menu hidden" id="dropdown-menu">
                 <ul>
                     <li>
                         <a href="{% url 'signin' %}">
